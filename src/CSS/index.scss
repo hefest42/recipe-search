@@ -169,26 +169,59 @@ body {
     height: 94%;
 
     &-left {
-        background-color: peru;
         width: 30%;
         height: 100%;
     }
 
     &-right {
-        background-color: rebeccapurple;
         width: 70%;
         height: 100%;
     }
 }
 
 .recipeList {
-    background-color: violet;
     width: 100%;
     height: 95%;
+
+    &-item {
+        background-color: $secondary-gray;
+        color: #fff;
+        width: 100%;
+        height: 7rem;
+        border-radius: 15px;
+        border-right: 10px solid #fff;
+
+        a {
+            text-decoration: none;
+        }
+
+        &:hover {
+            background-color: $main-gray;
+        }
+
+        &__image {
+            width: 30%;
+            height: 100%;
+
+            img {
+                border-radius: 15px;
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        &__info {
+            width: 70%;
+
+            span {
+                color: #ccc;
+            }
+        }
+    }
 }
 
 .navigation {
-    background-color: #d54841;
     width: 100%;
     height: 5%;
 }

@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+
+import { useNavigate } from "react-router-dom";
 
 import { BsSearch, BsGithub } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
-const ContainerTop = () => {
+const ContainerTop = ({ getTerm }) => {
+    const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false);
+    const foodRef = useRef();
+
+    const searchHandler = e => {
+        e.preventDefault();
+
+        const searchTerm = foodRef.current.value;
+
+        setShowSearchWarning(false);
+        getTerm(searchTerm);
+
+        navigate(`results?=${searchTerm}`);
+
+        foodRef.current.value = "";
+    };
 
     return (
         <div className="top">
@@ -12,11 +29,11 @@ const ContainerTop = () => {
                 <p>RECIPE SEARCH</p>
             </div>
             <div className="top-search centered">
-                <form className="centered">
+                <form className="centered" onSubmit={searchHandler}>
                     <div className="top-search__svg centered">
                         <BsSearch />
                     </div>
-                    <input type="text" onFocus={() => setShowSearchWarning(true)} onBlur={() => setShowSearchWarning(false)} />
+                    <input type="text" onFocus={() => setShowSearchWarning(true)} onBlur={() => setShowSearchWarning(false)} ref={foodRef} />
                     <button>SEARCH</button>
 
                     {showSearchWarning && (

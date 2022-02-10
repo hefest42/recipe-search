@@ -7,7 +7,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Navigate to="/recipes" />} />
             <Route
-                path="/recipes"
+                path="/recipes/*"
                 element={
                     <div className="app">
                         <Container />

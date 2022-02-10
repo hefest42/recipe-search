@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Routes, Route } from "react-router-dom";
+
 import HeroRecipe from "./HeroRecipe";
 import RecipesList from "./RecipesList";
 import RecipeListNavigation from "./RecipeListNavigation";
@@ -22,18 +24,23 @@ const recipe = [
         publisherUrl: "http://www.101cookbooks.com",
         title: "Best Pizza Dough Ever",
     },
+
+    {
+        publisher: "101 Cookbooks",
+        title: "Best Pizza Dough Ever",
+        source_url: "http://www.101cookbooks.com/archives/001199.html",
+        recipe_id: "47746",
+        image_url: "http://forkify-api.herokuapp.com/images/best_pizza_dough_recipe1b20.jpg",
+        social_rank: 100,
+        publisher_url: "http://www.101cookbooks.com",
+    },
 ];
 
-const ContainerBottom = () => {
+const ContainerBottom = ({ searchQuery }) => {
     return (
         <div className="down centered">
-            <div className="down-left">
-                <RecipesList recipes={recipe} />
-                <RecipeListNavigation />
-            </div>
-            <div className="down-right">
-                <HeroRecipe />
-            </div>
+            <div className="down-left"></div>
+            <div className="down-right"></div>
         </div>
     );
 };
