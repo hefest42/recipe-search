@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { BsSearch, BsGithub } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
-const ContainerTop = ({ getTerm }) => {
+const ContainerTop = () => {
     const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false);
     const foodRef = useRef();
@@ -16,7 +16,6 @@ const ContainerTop = ({ getTerm }) => {
         const search = foodRef.current.value;
         navigate(`${search}`);
 
-        getTerm(search);
         foodRef.current.value = "";
         setShowSearchWarning(false);
     };

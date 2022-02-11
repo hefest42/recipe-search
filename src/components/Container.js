@@ -4,7 +4,6 @@ import ContainerBottom from "./ContainerBottom";
 
 import { Routes, Route } from "react-router-dom";
 
-// https://forkify-api.herokuapp.com/api/search?q=pizza
 const Container = () => {
     return (
         <div className="container">

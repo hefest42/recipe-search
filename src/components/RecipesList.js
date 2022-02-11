@@ -5,6 +5,7 @@ import RecipeListNavigation from "./RecipeListNavigation";
 
 import { Link, useParams } from "react-router-dom";
 
+// TODO set it to search based on the params
 const RecipesList = () => {
     const [pageState, setPageState] = useState("");
     const [recipes, setRecipes] = useState([]);
@@ -35,7 +36,7 @@ const RecipesList = () => {
             } catch (err) {}
         };
 
-        // getRecipesHandler();
+        getRecipesHandler();
     }, []);
 
     return (
