@@ -13,14 +13,12 @@ const ContainerTop = ({ getTerm }) => {
     const searchHandler = e => {
         e.preventDefault();
 
-        const searchTerm = foodRef.current.value;
+        const search = foodRef.current.value;
+        navigate(`${search}`);
 
-        setShowSearchWarning(false);
-        getTerm(searchTerm);
-
-        navigate(`results?=${searchTerm}`);
-
+        getTerm(search);
         foodRef.current.value = "";
+        setShowSearchWarning(false);
     };
 
     return (
