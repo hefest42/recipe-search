@@ -29,6 +29,8 @@ const RecipeListNavigation = ({ allRecipes, getSlicedRecipes, page, pageHandler 
         });
     }, [page, allRecipes, getSlicedRecipes, numberOfItemsPerPage]);
 
+    if (allRecipes.length === 0) return null;
+
     return (
         <div className="navigation ">
             {(page === 0 && (

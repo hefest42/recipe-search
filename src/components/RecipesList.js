@@ -23,6 +23,8 @@ const RecipesList = ({ getRecipeID }) => {
 
                 const data = await fetch(`https://forkify-api.herokuapp.com/api/search?q=${search}`);
 
+                if (!data.ok) throw new Error();
+
                 const fetchedRecipes = await data.json();
 
                 setRecipes(
