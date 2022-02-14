@@ -3,7 +3,8 @@ import React, { useState, useEffect, Fragment } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 const RecipeListNavigation = ({ allRecipes, getSlicedRecipes, page, pageHandler }) => {
-    const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(8);
+    const windowSize = window.innerWidth;
+    const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState();
     const numberOfPages = Math.ceil(allRecipes.length / numberOfItemsPerPage);
 
     const pageDecreaseHandler = () => {
@@ -23,11 +24,14 @@ const RecipeListNavigation = ({ allRecipes, getSlicedRecipes, page, pageHandler 
 
         getSlicedRecipes(slicedRecipes);
 
+        if (windowSize > 1000) setNumberOfItemsPerPage(8);
+        else setNumberOfItemsPerPage(10);
+
         window.addEventListener("resize", () => {
-            if (window.innerWidth > 1000) setNumberOfItemsPerPage(8);
+            if (windowSize > 1000) setNumberOfItemsPerPage(8);
             else setNumberOfItemsPerPage(10);
         });
-    }, [page, allRecipes, getSlicedRecipes, numberOfItemsPerPage]);
+    }, [page, allRecipes, getSlicedRecipes, numberOfItemsPerPage, windowSize]);
 
     if (allRecipes.length === 0) return null;
 

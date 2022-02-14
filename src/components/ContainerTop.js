@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { BsSearch, BsGithub } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
@@ -23,20 +23,32 @@ const ContainerTop = () => {
     return (
         <div className="top">
             <div className="top-logo">
-                <p>RECIPE SEARCH</p>
+                <Link to="/recipes">
+                    <p>RECIPE SEARCH</p>
+                </Link>
             </div>
             <div className="top-search centered">
                 <form className="centered" onSubmit={searchHandler}>
                     <div className="top-search__svg centered">
                         <BsSearch />
                     </div>
-                    <input type="text" onFocus={() => setShowSearchWarning(true)} onBlur={() => setShowSearchWarning(false)} ref={foodRef} />
+                    <input type="text" ref={foodRef} onFocus={() => setShowSearchWarning(true)} />
                     <button>SEARCH</button>
 
                     {showSearchWarning && (
-                        <div className="top-search__warning centered-column">
+                        <div
+                            className="top-search__warning centered-column"
+                            onMouseEnter={() => setShowSearchWarning(true)}
+                            onMouseLeave={() => setShowSearchWarning(false)}
+                        >
                             <p>Search terms are limited. Search for terms like "Pizza" or "Chicken".</p>
-                            <a href="https://forkify-api.herokuapp.com/phrases.html" target="_blank" rel="noreferrer" className="centered">
+                            <a
+                                href="https://forkify-api.herokuapp.com/phrases.html"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="centered"
+                                onClick={() => setShowSearchWarning(false)}
+                            >
                                 To see the full list of terms, click here. <FaExternalLinkAlt />
                             </a>
                         </div>
@@ -44,7 +56,7 @@ const ContainerTop = () => {
                 </form>
             </div>
             <div className="top-links">
-                <a href="https://www.youtube.com/" target="_blank" rel="noreferrer">
+                <a href="https://github.com/hefest42/recipe-search" target="_blank" rel="noreferrer">
                     <BsGithub />
                 </a>
             </div>

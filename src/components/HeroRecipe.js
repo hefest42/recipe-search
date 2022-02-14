@@ -23,8 +23,6 @@ const HeroRecipe = ({ getID }) => {
 
                 const data = await fetch(`https://forkify-api.herokuapp.com/api/get?rId=${id}`);
 
-                console.log(data);
-
                 if (!data.ok) throw new Error();
 
                 const { recipe } = await data.json();
