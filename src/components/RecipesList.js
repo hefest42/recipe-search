@@ -8,13 +8,13 @@ import { Link, useParams } from "react-router-dom";
 
 // TODO set it to search based on the params
 const RecipesList = () => {
+    const params = useParams();
     const [pageState, setPageState] = useState("");
     const [recipes, setRecipes] = useState([]);
-    const params = useParams();
+    const [slicedRecipes, setSlicedRecipes] = useState([]);
+    const [page, setPage] = useState(0);
 
     const { search } = params;
-
-    console.log(search);
 
     useEffect(() => {
         const getRecipesHandler = async () => {
@@ -45,6 +45,7 @@ const RecipesList = () => {
         };
 
         getRecipesHandler();
+        setPage(0);
     }, [search]);
 
     return (
@@ -53,7 +54,7 @@ const RecipesList = () => {
                 {pageState === "loading" && <LoadingSpinner />}
 
                 {pageState === "recipes" &&
-                    recipes.map((recipe, i) => (
+                    slicedRecipes.map((recipe, i) => (
                         <Link to={`${recipe.recipeId}`} key={i}>
                             <div className="recipeList-item centered">
                                 <div className="recipeList-item__image">
@@ -71,7 +72,7 @@ const RecipesList = () => {
 
                 {pageState === "error" && <Error size="1.5" errorMessage={`Couldn't find anything for the term ${search}. Please try again`} />}
             </div>
-            <RecipeListNavigation />
+            <RecipeListNavigation allRecipes={recipes} getSlicedRecipes={setSlicedRecipes} page={page} pageHandler={setPage} />
         </Fragment>
     );
 };
