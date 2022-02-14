@@ -9,13 +9,18 @@ import { Link, useParams } from "react-router-dom";
 const RecipesList = () => {
     const [pageState, setPageState] = useState("");
     const [recipes, setRecipes] = useState([]);
+    const params = useParams();
+
+    const { search } = params;
+
+    console.log(search);
 
     useEffect(() => {
         const getRecipesHandler = async () => {
             try {
                 setPageState("loading");
 
-                const data = await fetch(`https://forkify-api.herokuapp.com/api/search?q=pizza`);
+                const data = await fetch(`https://forkify-api.herokuapp.com/api/search?q=${search}`);
 
                 const fetchedRecipes = await data.json();
 
@@ -37,7 +42,7 @@ const RecipesList = () => {
         };
 
         getRecipesHandler();
-    }, []);
+    }, [search]);
 
     return (
         <div className="recipeList">

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import { useParams } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
+import Error from "./Error";
+
+import { useParams } from "react-router-dom";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
 
@@ -35,7 +37,7 @@ const HeroRecipe = () => {
                     };
                 });
 
-                setPageState("hero");
+                setPageState("error");
             } catch (error) {}
         };
 
@@ -80,6 +82,8 @@ const HeroRecipe = () => {
                     </div>
                 </div>
             )}
+
+            {pageState === "error" && <Error errorMessage="Oops... Something went wrong, please try again." />}
         </div>
     );
 };
