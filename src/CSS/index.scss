@@ -179,17 +179,18 @@ body {
     height: 95%;
     overflow: hidden;
 
+    a {
+        text-decoration: none;
+    }
+
     &-item {
         background-color: $secondary-gray;
         color: #fff;
         width: 95%;
         height: 6rem;
         margin-top: 1rem;
+        border-right: 10px solid transparent;
         border-radius: 15px 0 0 15px;
-
-        a {
-            text-decoration: none;
-        }
 
         &:hover {
             background-color: $main-gray;
@@ -393,6 +394,11 @@ body {
         height: 100%;
         margin: 0;
         border-radius: 0;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .top {
@@ -412,6 +418,17 @@ body {
             svg {
                 margin: 0;
             }
+        }
+    }
+
+    .down {
+        width: 98%;
+    }
+
+    .recipeList {
+        &-item {
+            height: 4rem;
+            margin-top: 1rem;
         }
     }
 }

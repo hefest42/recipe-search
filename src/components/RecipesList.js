@@ -7,7 +7,7 @@ import Error from "./Error";
 import { Link, useParams } from "react-router-dom";
 
 // TODO set it to search based on the params
-const RecipesList = () => {
+const RecipesList = ({ getRecipeID }) => {
     const params = useParams();
     const [pageState, setPageState] = useState("");
     const [recipes, setRecipes] = useState([]);
@@ -56,7 +56,11 @@ const RecipesList = () => {
                 {pageState === "recipes" &&
                     slicedRecipes.map((recipe, i) => (
                         <Link to={`${recipe.recipeId}`} key={i}>
-                            <div className="recipeList-item centered">
+                            <div
+                                className={
+                                    recipe.recipeId === getRecipeID ? "recipeList-item recipeList-active centered" : "recipeList-item centered"
+                                }
+                            >
                                 <div className="recipeList-item__image">
                                     <img src={recipe.imageUrl} alt={recipe.title} />
                                 </div>

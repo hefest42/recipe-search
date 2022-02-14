@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
 
-const HeroRecipe = () => {
+const HeroRecipe = ({ getID }) => {
     const [pageState, setPageState] = useState("");
     const [sortedRecipe, setSortedRecipe] = useState({});
     const params = useParams();
@@ -44,7 +44,8 @@ const HeroRecipe = () => {
         };
 
         fetchRecipeHandler();
-    }, [id]);
+        getID(id);
+    }, [id, getID]);
 
     return (
         <div className="hero-container ">
