@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import LoadingSpinner from "./LoadingSpinner";
 import RecipeListNavigation from "./RecipeListNavigation";
+import Error from "./Error";
 
 import { Link, useParams } from "react-router-dom";
 
@@ -38,7 +39,9 @@ const RecipesList = () => {
                 );
 
                 setPageState("recipes");
-            } catch (err) {}
+            } catch (err) {
+                setPageState("error");
+            }
         };
 
         getRecipesHandler();
@@ -64,6 +67,8 @@ const RecipesList = () => {
                         </div>
                     </Link>
                 ))}
+
+            {pageState === "error" && <Error size="1.5" errorMessage={`Couldn't find anything for the term ${search}. Please try again`} />}
         </div>
     );
 };

@@ -37,8 +37,10 @@ const HeroRecipe = () => {
                     };
                 });
 
+                setPageState("hero");
+            } catch (error) {
                 setPageState("error");
-            } catch (error) {}
+            }
         };
 
         fetchRecipeHandler();
@@ -83,7 +85,7 @@ const HeroRecipe = () => {
                 </div>
             )}
 
-            {pageState === "error" && <Error errorMessage="Oops... Something went wrong, please try again." />}
+            {pageState === "error" && <Error size="2" errorMessage="Oops... Something went wrong, please try again." />}
         </div>
     );
 };

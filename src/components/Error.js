@@ -1,9 +1,15 @@
 import React from "react";
 
-const Error = ({ errorMessage }) => {
+const Error = ({ errorMessage, size }) => {
     return (
-        <div className="error">
-            <p>{errorMessage}</p>
+        <div className="error centered">
+            <p
+                style={{
+                    fontSize: `${size}rem`,
+                }}
+            >
+                {errorMessage}
+            </p>
         </div>
     );
 };
