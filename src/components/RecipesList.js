@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
 import LoadingSpinner from "./LoadingSpinner";
 import RecipeListNavigation from "./RecipeListNavigation";
@@ -48,28 +48,31 @@ const RecipesList = () => {
     }, [search]);
 
     return (
-        <div className="recipeList">
-            {pageState === "loading" && <LoadingSpinner />}
+        <Fragment>
+            <div className="recipeList">
+                {pageState === "loading" && <LoadingSpinner />}
 
-            {pageState === "recipes" &&
-                recipes.map((recipe, i) => (
-                    <Link to={`${recipe.recipeId}`} key={i}>
-                        <div className="recipeList-item centered">
-                            <div className="recipeList-item__image">
-                                <img src={recipe.imageUrl} alt={recipe.title} />
+                {pageState === "recipes" &&
+                    recipes.map((recipe, i) => (
+                        <Link to={`${recipe.recipeId}`} key={i}>
+                            <div className="recipeList-item centered">
+                                <div className="recipeList-item__image">
+                                    <img src={recipe.imageUrl} alt={recipe.title} />
+                                </div>
+
+                                <div className="recipeList-item__info centered-column">
+                                    <h3>{recipe.title}</h3>
+                                    <span>from</span>
+                                    <h4 className="centered">{recipe.publisher}</h4>
+                                </div>
                             </div>
+                        </Link>
+                    ))}
 
-                            <div className="recipeList-item__info centered-column">
-                                <h3>{recipe.title}</h3>
-                                <span>from</span>
-                                <h4 className="centered">{recipe.publisher}</h4>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
-
-            {pageState === "error" && <Error size="1.5" errorMessage={`Couldn't find anything for the term ${search}. Please try again`} />}
-        </div>
+                {pageState === "error" && <Error size="1.5" errorMessage={`Couldn't find anything for the term ${search}. Please try again`} />}
+            </div>
+            <RecipeListNavigation />
+        </Fragment>
     );
 };
 
