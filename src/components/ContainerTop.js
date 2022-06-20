@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { BsSearch, BsGithub } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { VscAccount } from "react-icons/vsc";
 
 const ContainerTop = () => {
     const navigate = useNavigate();
@@ -56,9 +57,7 @@ const ContainerTop = () => {
                 </form>
             </div>
             <div className="top-links">
-                <a href="https://github.com/hefest42/recipe-search" target="_blank" rel="noreferrer">
-                    <BsGithub />
-                </a>
+                <VscAccount />
             </div>
         </div>
     );
