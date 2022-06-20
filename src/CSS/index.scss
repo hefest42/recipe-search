@@ -402,6 +402,64 @@ body {
     height: 15rem;
 }
 
+.create {
+    width: 100%;
+
+    &-inner {
+        color: #fff;
+        width: 22rem;
+        margin-top: 10rem;
+        padding: 2rem 1rem;
+        border: 1px solid $border-gray;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        &_title {
+            font-size: 2rem;
+        }
+    }
+}
+
+.form {
+    width: 100%;
+
+    &-input_container {
+        width: 100%;
+        margin-top: 1rem;
+
+        label {
+            font-size: 1.2rem;
+        }
+    }
+
+    &-input {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        input {
+            width: 85%;
+            height: 2rem;
+            margin-top: 0.4rem;
+        }
+
+        svg {
+            width: 25px;
+            height: 25px;
+            margin-left: 0.3rem;
+        }
+    }
+
+    button {
+        width: 85%;
+        height: 2.5rem;
+        margin-top: 1.5rem;
+    }
+}
+
 //! ERROR ////////////////////////////////////////////////////////////////////////////////////////////////
 .error {
     color: $error-secondary;
