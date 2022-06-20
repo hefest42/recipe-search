@@ -420,6 +420,18 @@ body {
         &_title {
             font-size: 2rem;
         }
+
+        &_info {
+            margin-top: 1rem;
+
+            a {
+                color: $main-blue;
+            }
+
+            div {
+                margin-top: 0.5rem;
+            }
+        }
     }
 }
 
@@ -441,9 +453,16 @@ body {
         align-items: center;
 
         input {
+            background-color: $main-gray;
+            color: #fff;
             width: 85%;
             height: 2rem;
             margin-top: 0.4rem;
+            font-size: 1.2rem;
+
+            &:focus {
+                outline: none;
+            }
         }
 
         svg {
@@ -451,12 +470,45 @@ body {
             height: 25px;
             margin-left: 0.3rem;
         }
+
+        &__correct {
+            input {
+                box-shadow: 0px 0px 2px 1px green;
+                border: 1px solid green;
+                outline: none;
+            }
+
+            svg {
+                color: green;
+            }
+        }
+
+        &__wrong {
+            input {
+                box-shadow: 0px 0px 2px 1px $error-red;
+                border: 1px solid $error-red;
+                outline: none;
+            }
+
+            svg {
+                color: $error-red;
+            }
+        }
     }
 
     button {
+        background-color: $main-blue;
         width: 85%;
         height: 2.5rem;
         margin-top: 1.5rem;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        border-color: $main-blue;
+
+        &:hover {
+            background-color: $secondary-blue;
+        }
     }
 }
 
