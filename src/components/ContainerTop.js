@@ -2,9 +2,11 @@ import React, { useState, useRef } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { BsSearch, BsGithub } from "react-icons/bs";
+import { BsSearch, BsFillBookmarkFill } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { VscAccount } from "react-icons/vsc";
+
+import AccountDropdown from "./AccountDropdown";
 
 const ContainerTop = () => {
     const navigate = useNavigate();
@@ -57,7 +59,13 @@ const ContainerTop = () => {
                 </form>
             </div>
             <div className="top-links">
-                <VscAccount />
+                <div className="top-links_container">
+                    BOOKMARKS <BsFillBookmarkFill />
+                </div>
+                <div className="top-links_container">
+                    <VscAccount />
+                </div>
+                {/* <AccountDropdown /> */}
             </div>
         </div>
     );

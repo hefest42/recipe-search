@@ -147,20 +147,25 @@ body {
 
     &-links {
         width: 20%;
+        height: 100%;
+        color: #fff;
 
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
 
-        a {
-            color: #fff;
-            text-decoration: none;
+        &_container {
+            height: 100%;
+            cursor: pointer;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         svg {
             color: white;
             width: 30px;
             height: 30px;
-            cursor: pointer;
         }
     }
 }
@@ -353,6 +358,15 @@ body {
             }
         }
     }
+}
+
+.account {
+    position: absolute;
+    top: 10%;
+    left: 72%;
+    background-color: white;
+    width: 20rem;
+    height: 15rem;
 }
 
 //! ERROR ////////////////////////////////////////////////////////////////////////////////
