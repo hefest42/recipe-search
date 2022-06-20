@@ -3,7 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
+import { BsFillInfoCircleFill } from "react-icons/bs";
 
+//TODO fix the svg so its in a seperate div for future loading spinner
+//TODO checks for account name as the user types
 const CreateAccount = () => {
     return (
         <div className="create centered">
@@ -23,6 +26,10 @@ const CreateAccount = () => {
                         <div className="form-input form-input__wrong">
                             <input type="password" id="pword" name="pword" autoComplete="yes" />
                             <IoMdCloseCircle />
+                        </div>
+                        <div className="form-info ">
+                            <BsFillInfoCircleFill />
+                            <p> needs to be at least 6 characters</p>
                         </div>
                     </div>
                     <button>Create Account</button>

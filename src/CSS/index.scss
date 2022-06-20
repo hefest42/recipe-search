@@ -466,6 +466,7 @@ body {
         }
 
         svg {
+            color: transparent;
             width: 25px;
             height: 25px;
             margin-left: 0.3rem;
@@ -493,6 +494,19 @@ body {
             svg {
                 color: $error-red;
             }
+        }
+    }
+
+    &-info {
+        width: 95%;
+
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 0.5rem;
+
+        p {
+            margin-left: 0.5rem;
         }
     }
 
