@@ -1,7 +1,12 @@
 import React from "react";
 
-const AccountDropdown = () => {
-    return <div className="account"></div>;
+const AccountDropdown = ({ changeAccount }) => {
+    return (
+        <div className="account" onMouseLeave={() => changeAccount(false)}>
+            <p>Hello, Account</p>
+            <p>Logout</p>
+        </div>
+    );
 };
 
 export default AccountDropdown;

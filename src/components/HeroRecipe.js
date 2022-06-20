@@ -6,6 +6,7 @@ import Error from "./Error";
 import { useParams } from "react-router-dom";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { BsBookmark } from "react-icons/bs";
 
 const HeroRecipe = ({ getID }) => {
     const [pageState, setPageState] = useState("");
@@ -58,9 +59,15 @@ const HeroRecipe = ({ getID }) => {
                     <div className="hero-image">
                         <img src={sortedRecipe.imageUrl} alt="" />
                     </div>
+
                     <div className="hero-title centered">
                         <h1>{`${sortedRecipe.title}`}</h1>
                     </div>
+
+                    <div className="hero-bookmark centered">
+                        <BsBookmark />
+                    </div>
+
                     <div className="hero-ingredients centered">
                         <ul>
                             {sortedRecipe.ingredients.map((ing, i) => (
