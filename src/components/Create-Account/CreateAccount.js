@@ -27,6 +27,7 @@ const CreateAccount = () => {
         };
 
         try {
+            // eslint-disable-next-line no-unused-vars
             const response = await fetch(`https://recipedb-3c8b3-default-rtdb.europe-west1.firebasedatabase.app/accounts.json`, {
                 method: "POST",
                 headers: {
