@@ -4,10 +4,10 @@ import ContainerBottom from "./ContainerBottom";
 
 import { Routes, Route } from "react-router-dom";
 
-const Container = () => {
+const Container = ({ account }) => {
     return (
         <div className="container">
-            <ContainerTop />
+            <ContainerTop loggedInAccounts={account} />
             <Routes>
                 <Route path={`:search/*`} element={<ContainerBottom />} />
             </Routes>

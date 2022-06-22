@@ -9,14 +9,14 @@ import { VscAccount } from "react-icons/vsc";
 import AccountDropdown from "./AccountDropdown";
 import BookmarksDropdown from "./BookmarksDropdown";
 
-const ContainerTop = () => {
+const ContainerTop = ({ loggedInAccounts }) => {
     const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false);
     const [showBookmarks, setShowBookmarks] = useState(false);
     const [showAccount, setShowAccount] = useState(false);
     const foodRef = useRef();
 
-    const searchHandler = e => {
+    const searchHandler = (e) => {
         e.preventDefault();
 
         const search = foodRef.current.value;
@@ -25,6 +25,8 @@ const ContainerTop = () => {
         foodRef.current.value = "";
         setShowSearchWarning(false);
     };
+
+    console.log(loggedInAccounts);
 
     return (
         <>
@@ -63,11 +65,11 @@ const ContainerTop = () => {
                     </form>
                 </div>
                 <div className="top-links">
-                    <div className="top-links_container" onClick={() => setShowBookmarks(state => !state)}>
+                    <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
                         BOOKMARKS <BsFillBookmarkFill />
                     </div>
                     <div className="top-links_container">
-                        <VscAccount onClick={() => setShowAccount(state => !state)} />
+                        <VscAccount onClick={() => setShowAccount((state) => !state)} />
                     </div>
                     {showAccount && <AccountDropdown changeAccount={setShowAccount} />}
                     {showBookmarks && <BookmarksDropdown changeBookmarks={setShowBookmarks} />}

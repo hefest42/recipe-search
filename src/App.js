@@ -17,12 +17,12 @@ function App() {
                 path="/recipes/*"
                 element={
                     <div className="app">
-                        <Container />
+                        <Container account={loggedInAccount} />
                     </div>
                 }
             />
             <Route path="create-account" element={<CreateAccount />} />
-            <Route path="log-in" element={<LogIn />} />
+            <Route path="log-in" element={<LogIn logInAccount={setLoggedInAccount} />} />
         </Routes>
     );
 }
