@@ -5,10 +5,10 @@ import { Routes, Route } from "react-router-dom";
 import HeroRecipe from "./HeroRecipe";
 import RecipesList from "./RecipesList";
 
-const ContainerBottom = () => {
+const ContainerBottom = ({ loggedInAccount }) => {
     const [recipeID, setRecipeID] = useState("");
 
-    const getRecipeIDHandler = id => {
+    const getRecipeIDHandler = (id) => {
         setRecipeID(id);
     };
 
@@ -19,7 +19,7 @@ const ContainerBottom = () => {
             </div>
             <div className="down-right">
                 <Routes>
-                    <Route path=":id" element={<HeroRecipe getID={getRecipeIDHandler} />} />
+                    <Route path=":id" element={<HeroRecipe getID={getRecipeIDHandler} account={loggedInAccount} />} />
                 </Routes>
             </div>
         </div>

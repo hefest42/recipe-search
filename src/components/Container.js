@@ -9,7 +9,7 @@ const Container = ({ account }) => {
         <div className="container">
             <ContainerTop loggedInAccount={account} />
             <Routes>
-                <Route path={`:search/*`} element={<ContainerBottom />} />
+                <Route path={`:search/*`} element={<ContainerBottom loggedInAccount={account} />} />
             </Routes>
         </div>
     );

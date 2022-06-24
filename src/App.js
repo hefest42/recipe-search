@@ -8,7 +8,9 @@ import CreateAccount from "./components/Create-Account/CreateAccount";
 import LogIn from "./components/Log-in/LogIn";
 
 function App() {
-    const [loggedInAccount, setLoggedInAccount] = useState({});
+    const [loggedInAccount, setLoggedInAccount] = useState({
+        bookmarks: [],
+    });
 
     return (
         <Routes>

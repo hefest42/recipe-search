@@ -6,14 +6,46 @@ import Error from "./Error";
 import { useParams } from "react-router-dom";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { BsBookmark } from "react-icons/bs";
+import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
-const HeroRecipe = ({ getID }) => {
+const HeroRecipe = ({ getID, account }) => {
     const [pageState, setPageState] = useState("");
     const [sortedRecipe, setSortedRecipe] = useState({});
+    const [loggedInAccountBookmarks, setLoggedInAccountBookmarks] = useState([...account.bookmarks]);
     const params = useParams();
 
     const { id } = params;
+
+    const addRecipeToBookmarksHandler = async () => {
+        setLoggedInAccountBookmarks((state) => [...state, sortedRecipe]);
+
+        const updatedBookmarks = loggedInAccountBookmarks;
+        console.log(updatedBookmarks);
+
+        try {
+            await fetch(`https://recipedb-3c8b3-default-rtdb.europe-west1.firebasedatabase.app/accounts/${account.accountKey}.json`, {
+                method: "PATCH",
+                body: JSON.stringify({ bookmarks: updatedBookmarks }),
+                headers: {
+                    "CONTENT-TYPE": "application/json",
+                },
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const removeRecipeFromBookmarksHandler = () => {
+        setLoggedInAccountBookmarks((state) => state.filter((bmarks) => bmarks.recipeId !== id));
+
+        fetch(`https://recipedb-3c8b3-default-rtdb.europe-west1.firebasedatabase.app/accounts/${account.accountKey}.json`, {
+            method: "PATCH",
+            body: JSON.stringify({ bookmarks: loggedInAccountBookmarks }),
+            headers: {
+                "CONTENT-TYPE": "application/json",
+            },
+        });
+    };
 
     useEffect(() => {
         if (!id) return;
@@ -65,7 +97,11 @@ const HeroRecipe = ({ getID }) => {
                     </div>
 
                     <div className="hero-bookmark centered">
-                        <BsBookmark />
+                        {loggedInAccountBookmarks.filter((bmark) => bmark.recipeId === id).length === 1 ? (
+                            <BsFillBookmarkFill onClick={removeRecipeFromBookmarksHandler} />
+                        ) : (
+                            <BsBookmark onClick={addRecipeToBookmarksHandler} />
+                        )}
                     </div>
 
                     <div className="hero-ingredients centered">
