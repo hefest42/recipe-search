@@ -27,6 +27,7 @@ const LogIn = ({ logInAccount }) => {
 
             for (const key in data) {
                 allAccounts.push({
+                    accountKey: key,
                     username: data[key].name,
                     password: data[key].password,
                     bookmarks: data[key].bookmarks,
@@ -79,7 +80,7 @@ const LogIn = ({ logInAccount }) => {
 
                 <div className="create-inner_info">
                     <div>
-                        If you don't have an account? <Link to="/log-in">Create Account</Link>.
+                        If you don't have an account? <Link to="/create-account">Create Account</Link>.
                     </div>
                     <div>
                         You don't need an Account to browse the recipes. <Link to="/">Click here to go back to the search</Link>.
