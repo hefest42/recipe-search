@@ -16,28 +16,8 @@ const HeroRecipe = ({ getID, account }) => {
 
     const { id } = params;
 
-    const addRecipeToBookmarksHandler = async () => {
-        setLoggedInAccountBookmarks((state) => [...state, sortedRecipe]);
-
-        const updatedBookmarks = loggedInAccountBookmarks;
-        console.log(updatedBookmarks);
-
-        try {
-            await fetch(`https://recipedb-3c8b3-default-rtdb.europe-west1.firebasedatabase.app/accounts/${account.accountKey}.json`, {
-                method: "PATCH",
-                body: JSON.stringify({ bookmarks: updatedBookmarks }),
-                headers: {
-                    "CONTENT-TYPE": "application/json",
-                },
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const removeRecipeFromBookmarksHandler = () => {
-        setLoggedInAccountBookmarks((state) => state.filter((bmarks) => bmarks.recipeId !== id));
-
+    // updating bookmarks
+    useEffect(() => {
         fetch(`https://recipedb-3c8b3-default-rtdb.europe-west1.firebasedatabase.app/accounts/${account.accountKey}.json`, {
             method: "PATCH",
             body: JSON.stringify({ bookmarks: loggedInAccountBookmarks }),
@@ -45,8 +25,9 @@ const HeroRecipe = ({ getID, account }) => {
                 "CONTENT-TYPE": "application/json",
             },
         });
-    };
+    }, [loggedInAccountBookmarks, account]);
 
+    // fetching hero recipe based on the id in the link
     useEffect(() => {
         if (!id) return;
 
@@ -98,9 +79,11 @@ const HeroRecipe = ({ getID, account }) => {
 
                     <div className="hero-bookmark centered">
                         {loggedInAccountBookmarks.filter((bmark) => bmark.recipeId === id).length === 1 ? (
-                            <BsFillBookmarkFill onClick={removeRecipeFromBookmarksHandler} />
+                            <BsFillBookmarkFill
+                                onClick={() => setLoggedInAccountBookmarks((state) => state.filter((bmark) => bmark.recipeId !== id))}
+                            />
                         ) : (
-                            <BsBookmark onClick={addRecipeToBookmarksHandler} />
+                            <BsBookmark onClick={() => setLoggedInAccountBookmarks((state) => [...state, sortedRecipe])} />
                         )}
                     </div>
 
