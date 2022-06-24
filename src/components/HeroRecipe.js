@@ -8,24 +8,12 @@ import { useParams } from "react-router-dom";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
-const HeroRecipe = ({ getID, account }) => {
+const HeroRecipe = ({ getID, accountBookmarks, updateAccountBookmarks }) => {
     const [pageState, setPageState] = useState("");
     const [sortedRecipe, setSortedRecipe] = useState({});
-    const [loggedInAccountBookmarks, setLoggedInAccountBookmarks] = useState([...account.bookmarks]);
     const params = useParams();
 
     const { id } = params;
-
-    // updating bookmarks
-    useEffect(() => {
-        fetch(`https://recipedb-3c8b3-default-rtdb.europe-west1.firebasedatabase.app/accounts/${account.accountKey}.json`, {
-            method: "PATCH",
-            body: JSON.stringify({ bookmarks: loggedInAccountBookmarks }),
-            headers: {
-                "CONTENT-TYPE": "application/json",
-            },
-        });
-    }, [loggedInAccountBookmarks, account]);
 
     // fetching hero recipe based on the id in the link
     useEffect(() => {
@@ -78,12 +66,10 @@ const HeroRecipe = ({ getID, account }) => {
                     </div>
 
                     <div className="hero-bookmark centered">
-                        {loggedInAccountBookmarks.filter((bmark) => bmark.recipeId === id).length === 1 ? (
-                            <BsFillBookmarkFill
-                                onClick={() => setLoggedInAccountBookmarks((state) => state.filter((bmark) => bmark.recipeId !== id))}
-                            />
+                        {accountBookmarks.filter((bmark) => bmark.recipeId === id).length === 1 ? (
+                            <BsFillBookmarkFill onClick={() => updateAccountBookmarks(id, sortedRecipe)} />
                         ) : (
-                            <BsBookmark onClick={() => setLoggedInAccountBookmarks((state) => [...state, sortedRecipe])} />
+                            <BsBookmark onClick={() => updateAccountBookmarks(id, sortedRecipe)} />
                         )}
                     </div>
 

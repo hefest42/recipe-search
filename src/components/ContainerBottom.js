@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import HeroRecipe from "./HeroRecipe";
 import RecipesList from "./RecipesList";
 
-const ContainerBottom = ({ loggedInAccount }) => {
+const ContainerBottom = ({ loggedInBookmarks, onUpdateAccountBookmarks }) => {
     const [recipeID, setRecipeID] = useState("");
 
     const getRecipeIDHandler = (id) => {
@@ -19,7 +19,16 @@ const ContainerBottom = ({ loggedInAccount }) => {
             </div>
             <div className="down-right">
                 <Routes>
-                    <Route path=":id" element={<HeroRecipe getID={getRecipeIDHandler} account={loggedInAccount} />} />
+                    <Route
+                        path=":id"
+                        element={
+                            <HeroRecipe
+                                getID={getRecipeIDHandler}
+                                accountBookmarks={loggedInBookmarks}
+                                updateAccountBookmarks={onUpdateAccountBookmarks}
+                            />
+                        }
+                    />
                 </Routes>
             </div>
         </div>

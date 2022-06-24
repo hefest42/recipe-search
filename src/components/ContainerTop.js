@@ -64,7 +64,7 @@ const ContainerTop = ({ loggedInAccount }) => {
                 </div>
                 <div className="top-links">
                     <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
-                        {loggedInAccount.bookmarks && (
+                        {loggedInAccount.bookmarks.length > 0 && (
                             <>
                                 BOOKMARKS <BsFillBookmarkFill />
                             </>
