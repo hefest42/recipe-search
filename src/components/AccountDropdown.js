@@ -1,10 +1,22 @@
 import React from "react";
 
-const AccountDropdown = ({ changeAccount }) => {
+import { Link } from "react-router-dom";
+
+const AccountDropdown = ({ accountUsername, changeAccountDropdown }) => {
     return (
-        <div className="account" onMouseLeave={() => changeAccount(false)}>
-            <p>Hello, Account</p>
-            <p>Logout</p>
+        <div className="account" onMouseLeave={() => changeAccountDropdown(false)}>
+            {!accountUsername && (
+                <Link to={"/log-in"}>
+                    <p>Log In</p>
+                </Link>
+            )}
+
+            {accountUsername && (
+                <>
+                    <p>Hello, {accountUsername}</p>
+                    <p>Logout</p>
+                </>
+            )}
         </div>
     );
 };

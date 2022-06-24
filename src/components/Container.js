@@ -7,7 +7,7 @@ import { Routes, Route } from "react-router-dom";
 const Container = ({ account }) => {
     return (
         <div className="container">
-            <ContainerTop loggedInAccounts={account} />
+            <ContainerTop loggedInAccount={account} />
             <Routes>
                 <Route path={`:search/*`} element={<ContainerBottom />} />
             </Routes>

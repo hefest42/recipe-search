@@ -387,6 +387,15 @@ body {
     justify-content: center;
     align-items: center;
 
+    a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
     p {
         margin-top: 0.5rem;
         cursor: pointer;
