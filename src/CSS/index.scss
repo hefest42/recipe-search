@@ -408,7 +408,51 @@ body {
     right: 0;
     background-color: $main-gray;
     width: 20rem;
-    height: 15rem;
+    min-height: 15rem;
+
+    &-empty {
+        width: 100%;
+        height: 100%;
+        margin-top: 5rem;
+        text-align: center;
+    }
+
+    &-item {
+        width: 100%;
+        height: 4rem;
+        margin-bottom: 0.5rem;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__image {
+            min-width: 5rem;
+            max-width: 5rem;
+            height: 100%;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        &__title {
+            min-width: 10rem;
+            max-width: 10rem;
+            height: 100%;
+            font-size: 0.9rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        &__link,
+        &__delete {
+            height: 100%;
+            cursor: pointer;
+        }
+    }
 }
 
 .create {

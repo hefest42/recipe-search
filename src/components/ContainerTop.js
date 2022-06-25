@@ -9,7 +9,7 @@ import { VscAccount } from "react-icons/vsc";
 import AccountDropdown from "./AccountDropdown";
 import BookmarksDropdown from "./BookmarksDropdown";
 
-const ContainerTop = ({ loggedInAccount }) => {
+const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookmarks }) => {
     const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false);
     const [showBookmarks, setShowBookmarks] = useState(false);
@@ -64,7 +64,7 @@ const ContainerTop = ({ loggedInAccount }) => {
                 </div>
                 <div className="top-links">
                     <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
-                        {loggedInAccount.bookmarks.length > 0 && (
+                        {accountBookmarks.length > 0 && (
                             <>
                                 BOOKMARKS <BsFillBookmarkFill />
                             </>
@@ -75,7 +75,13 @@ const ContainerTop = ({ loggedInAccount }) => {
                     </div>
                     {showAccount && <AccountDropdown changeAccountDropdown={setShowAccount} accountUsername={loggedInAccount.username} />}
 
-                    {showBookmarks && <BookmarksDropdown changeBookmarksDropdown={setShowBookmarks} />}
+                    {showBookmarks && (
+                        <BookmarksDropdown
+                            changeBookmarksDropdown={setShowBookmarks}
+                            bookmarks={accountBookmarks}
+                            updatedBookmarks={onUpdateAccountBookmarks}
+                        />
+                    )}
                 </div>
             </div>
         </>

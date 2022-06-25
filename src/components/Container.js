@@ -8,8 +8,6 @@ const Container = ({ account }) => {
     const [loggedInAccountBookmarks, setLoggedInAccountBookmarks] = useState([...account.bookmarks]);
 
     const loggedInAccountBookmarksHandler = (id, recipe) => {
-        console.log(id);
-
         if (loggedInAccountBookmarks.filter((bm) => bm.recipeId === id).length === 1) {
             setLoggedInAccountBookmarks((state) => state.filter((bm) => bm.recipeId !== id));
         } else {
@@ -29,7 +27,11 @@ const Container = ({ account }) => {
 
     return (
         <div className="container">
-            <ContainerTop loggedInAccount={account} />
+            <ContainerTop
+                loggedInAccount={account}
+                accountBookmarks={loggedInAccountBookmarks}
+                onUpdateAccountBookmarks={loggedInAccountBookmarksHandler}
+            />
             <Routes>
                 <Route
                     path={`:search/*`}
