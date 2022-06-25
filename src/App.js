@@ -12,6 +12,12 @@ function App() {
         bookmarks: [],
     });
 
+    const logoutAccountHandler = () => {
+        setLoggedInAccount({
+            bookmarks: [],
+        });
+    };
+
     return (
         <Routes>
             <Route path="/" element={<Navigate to="/recipes" />} />
@@ -19,7 +25,7 @@ function App() {
                 path="/recipes/*"
                 element={
                     <div className="app">
-                        <Container account={loggedInAccount} />
+                        <Container account={loggedInAccount} onLogoutAccount={logoutAccountHandler} />
                     </div>
                 }
             />

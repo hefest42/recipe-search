@@ -4,7 +4,7 @@ import ContainerBottom from "./ContainerBottom";
 
 import { Routes, Route } from "react-router-dom";
 
-const Container = ({ account }) => {
+const Container = ({ account, onLogoutAccount }) => {
     const [loggedInAccountBookmarks, setLoggedInAccountBookmarks] = useState([...account.bookmarks]);
 
     const loggedInAccountBookmarksHandler = (id, recipe) => {
@@ -31,6 +31,7 @@ const Container = ({ account }) => {
                 loggedInAccount={account}
                 accountBookmarks={loggedInAccountBookmarks}
                 onUpdateAccountBookmarks={loggedInAccountBookmarksHandler}
+                logoutAccount={onLogoutAccount}
             />
             <Routes>
                 <Route

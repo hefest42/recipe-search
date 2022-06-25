@@ -23,6 +23,7 @@ const BookmarksDropdown = ({ changeBookmarksDropdown, bookmarks, updatedBookmark
                     <div className="bookmarks-item__image" onClick={() => heroRecipeHandler(bm.recipeId)}>
                         <img src={bm.imageUrl} alt="recipe" />
                     </div>
+
                     <div className="bookmarks-item__title centered" onClick={() => heroRecipeHandler(bm.recipeId)}>
                         {bm.title}
                     </div>
