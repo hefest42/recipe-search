@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import HeroRecipe from "./HeroRecipe";
 import RecipesList from "./RecipesList";
 
-const ContainerBottom = ({ loggedInBookmarks, onUpdateAccountBookmarks }) => {
+const ContainerBottom = ({ acc, loggedInBookmarks, onUpdateAccountBookmarks }) => {
     const [recipeID, setRecipeID] = useState("");
 
     const getRecipeIDHandler = (id) => {
@@ -23,6 +23,7 @@ const ContainerBottom = ({ loggedInBookmarks, onUpdateAccountBookmarks }) => {
                         path=":id"
                         element={
                             <HeroRecipe
+                                account={acc}
                                 getID={getRecipeIDHandler}
                                 accountBookmarks={loggedInBookmarks}
                                 updateAccountBookmarks={onUpdateAccountBookmarks}
