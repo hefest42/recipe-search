@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 
 import LoadingSpinner from "./LoadingSpinner";
 import Error from "./Error";
+import BookmarkModal from "./BookmarkModal";
 
 import { useParams } from "react-router-dom";
 
@@ -19,7 +21,7 @@ const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }
     const bookmarkModalHandler = () => {
         if (account.username) return;
 
-        console.log("MODAL");
+        setShowBookmarkModal(true);
     };
 
     // fetching hero recipe based on the id in the link
@@ -120,6 +122,10 @@ const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }
             )}
 
             {pageState === "error" && <Error size="2" errorMessage="Oops... Something went wrong, please try again." />}
+            {ReactDOM.createPortal(
+                <BookmarkModal showModal={showBookmarkModal} setBookmarkModal={setShowBookmarkModal} />,
+                document.getElementById("modal-root")
+            )}
         </div>
     );
 };

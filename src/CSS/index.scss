@@ -588,6 +588,56 @@ body {
     }
 }
 
+//! MODAL ////////////////////////////////////////////////////////////////////////////////////////////////
+
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(128, 128, 128, 0.4);
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+
+    &-inner {
+        background-color: $main-gray;
+        width: 25rem;
+        height: 7rem;
+        padding: 1rem 1rem;
+        border-right: 15px solid #fff;
+        border-radius: 10px 0 0 10px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        &__text {
+            color: #fff;
+            width: 100%;
+            font-size: 1.2rem;
+            text-align: justify;
+            margin-bottom: 1rem;
+        }
+
+        &__buttons {
+            width: 100%;
+            padding: 1rem 0rem;
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            button {
+                width: 7rem;
+                height: 2rem;
+                margin-left: 0.5rem;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
 //! ERROR ////////////////////////////////////////////////////////////////////////////////////////////////
 .error {
     color: $error-secondary;
@@ -641,8 +691,32 @@ body {
     }
 
     .top {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
         &-search {
-            width: 75%;
+            width: 55%;
+
+            form {
+                background-color: $main-gray;
+                width: 90%;
+                height: 80%;
+                border-radius: 5px;
+
+                input {
+                    background-color: transparent;
+                    color: #fff;
+                    width: 75%;
+                    height: 100%;
+                    font-size: 1.2rem;
+                    border: none;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
         }
 
         &-logo {
@@ -653,6 +727,7 @@ body {
 
         &-links {
             width: 5%;
+            margin-left: 2.5rem;
 
             svg {
                 margin: 0 1rem 0 0;
@@ -673,5 +748,13 @@ body {
                 font-size: 0.7rem;
             }
         }
+    }
+
+    .account {
+        right: -310%;
+    }
+
+    .bookmarks {
+        right: -310%;
     }
 }

@@ -64,11 +64,7 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
                 </div>
                 <div className="top-links">
                     <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
-                        {accountBookmarks.length > 0 && (
-                            <>
-                                BOOKMARKS <BsFillBookmarkFill />
-                            </>
-                        )}
+                        BOOKMARKS <BsFillBookmarkFill />
                     </div>
                     <div className="top-links_container">
                         <VscAccount onClick={() => setShowAccount((state) => !state)} />
@@ -79,6 +75,7 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
 
                     {showBookmarks && (
                         <BookmarksDropdown
+                            account={loggedInAccount}
                             changeBookmarksDropdown={setShowBookmarks}
                             bookmarks={accountBookmarks}
                             updatedBookmarks={onUpdateAccountBookmarks}
