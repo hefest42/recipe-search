@@ -17,6 +17,8 @@ const RecipesList = ({ getRecipeID }) => {
     const { search } = params;
 
     useEffect(() => {
+        if (search === "hero") return;
+
         const getRecipesHandler = async () => {
             try {
                 setPageState("loading");
@@ -28,7 +30,7 @@ const RecipesList = ({ getRecipeID }) => {
                 const fetchedRecipes = await data.json();
 
                 setRecipes(
-                    fetchedRecipes.recipes.map(recipe => {
+                    fetchedRecipes.recipes.map((recipe) => {
                         return {
                             imageUrl: recipe.image_url,
                             publisher: recipe.publisher,

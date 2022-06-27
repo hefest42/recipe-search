@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 
 import LoadingSpinner from "./LoadingSpinner";
 import Error from "./Error";
+import BookmarkModal from "./BookmarkModal";
 
 import { useParams } from "react-router-dom";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
-const HeroRecipe = ({ getID }) => {
+const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }) => {
     const [pageState, setPageState] = useState("");
     const [sortedRecipe, setSortedRecipe] = useState({});
+    const [showBookmarkModal, setShowBookmarkModal] = useState(false);
     const params = useParams();
 
     const { id } = params;
 
+    const bookmarkModalHandler = () => {
+        if (account.username) return;
+
+        setShowBookmarkModal(true);
+    };
+
+    // fetching hero recipe based on the id in the link
     useEffect(() => {
         if (!id) return;
 
@@ -49,6 +60,8 @@ const HeroRecipe = ({ getID }) => {
         getID(id);
     }, [id, getID]);
 
+    // console.log(account);
+
     return (
         <div className="hero-container ">
             {pageState === "loading" && <LoadingSpinner />}
@@ -58,9 +71,29 @@ const HeroRecipe = ({ getID }) => {
                     <div className="hero-image">
                         <img src={sortedRecipe.imageUrl} alt="" />
                     </div>
+
                     <div className="hero-title centered">
                         <h1>{`${sortedRecipe.title}`}</h1>
                     </div>
+
+                    <div className="hero-bookmark centered">
+                        {accountBookmarks.filter((bmark) => bmark.recipeId === id).length === 1 ? (
+                            <BsFillBookmarkFill
+                                onClick={() => {
+                                    updateAccountBookmarks(id, sortedRecipe);
+                                    bookmarkModalHandler();
+                                }}
+                            />
+                        ) : (
+                            <BsBookmark
+                                onClick={() => {
+                                    updateAccountBookmarks(id, sortedRecipe);
+                                    bookmarkModalHandler();
+                                }}
+                            />
+                        )}
+                    </div>
+
                     <div className="hero-ingredients centered">
                         <ul>
                             {sortedRecipe.ingredients.map((ing, i) => (
@@ -89,6 +122,10 @@ const HeroRecipe = ({ getID }) => {
             )}
 
             {pageState === "error" && <Error size="2" errorMessage="Oops... Something went wrong, please try again." />}
+            {ReactDOM.createPortal(
+                <BookmarkModal showModal={showBookmarkModal} setBookmarkModal={setShowBookmarkModal} />,
+                document.getElementById("modal-root")
+            )}
         </div>
     );
 };

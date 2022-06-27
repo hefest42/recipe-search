@@ -146,17 +146,25 @@ body {
     }
 
     &-links {
+        position: relative;
         width: 20%;
+        height: 100%;
+        color: #fff;
 
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
 
-        a {
-            color: #fff;
-            text-decoration: none;
+        &_container {
+            height: 100%;
+            cursor: pointer;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         svg {
+            color: white;
             width: 30px;
             height: 30px;
         }
@@ -298,14 +306,26 @@ body {
             }
         }
 
+        &-bookmark {
+            width: 100%;
+            height: 2rem;
+            margin-top: 1rem;
+
+            svg {
+                width: 2rem;
+                height: 2rem;
+                cursor: pointer;
+            }
+        }
+
         &-ingredients {
             width: 100%;
             min-height: 13rem;
-            margin-top: 1rem;
+            margin-top: 0rem;
 
             ul {
                 width: 80%;
-                margin-top: 1rem;
+                margin-top: 0.5rem;
                 columns: 3;
 
                 li {
@@ -353,7 +373,272 @@ body {
     }
 }
 
-//! ERROR ////////////////////////////////////////////////////////////////////////////////
+.account {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: $main-gray;
+    width: 7rem;
+    height: auto;
+    padding: 1rem 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-link {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    p {
+        margin-top: 0.5rem;
+        cursor: pointer;
+    }
+}
+
+.bookmarks {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: $main-gray;
+    width: 20rem;
+    min-height: 15rem;
+
+    &-empty {
+        width: 100%;
+        height: 100%;
+        margin-top: 5rem;
+        text-align: center;
+    }
+
+    &-item {
+        width: 100%;
+        height: 4rem;
+        margin-bottom: 0.5rem;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__image {
+            min-width: 5rem;
+            max-width: 5rem;
+            height: 100%;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        &__title {
+            min-width: 10rem;
+            max-width: 10rem;
+            height: 100%;
+            font-size: 0.9rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        &__link,
+        &__delete {
+            height: 100%;
+            cursor: pointer;
+        }
+    }
+}
+
+.create {
+    width: 100%;
+
+    &-inner {
+        color: #fff;
+        width: 22rem;
+        margin-top: 10rem;
+        padding: 2rem 1rem;
+        border: 1px solid $border-gray;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        &_title {
+            font-size: 2rem;
+        }
+
+        &_info {
+            margin-top: 1rem;
+
+            a {
+                color: $main-blue;
+            }
+
+            div {
+                margin-top: 0.5rem;
+            }
+        }
+    }
+}
+
+.form {
+    width: 100%;
+
+    &-input_container {
+        width: 100%;
+        margin-top: 1rem;
+
+        label {
+            font-size: 1.2rem;
+        }
+    }
+
+    &-input {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        input {
+            background-color: $main-gray;
+            color: #fff;
+            width: 85%;
+            height: 2rem;
+            margin-top: 0.4rem;
+            font-size: 1.2rem;
+            box-shadow: 0px 0px 2px 1px $main-gray;
+            border: 1px solid $main-gray;
+            outline: none;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        svg {
+            color: transparent;
+            width: 25px;
+            height: 25px;
+            margin-left: 0.3rem;
+        }
+
+        &__correct {
+            input {
+                box-shadow: 0px 0px 2px 1px green;
+                border: 1px solid green;
+                outline: none;
+            }
+
+            svg {
+                color: green;
+            }
+        }
+
+        &__wrong {
+            input {
+                box-shadow: 0px 0px 2px 1px $error-red;
+                border: 1px solid $error-red;
+                outline: none;
+            }
+
+            svg {
+                color: $error-red;
+            }
+        }
+    }
+
+    &-info {
+        width: 95%;
+
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 0.5rem;
+
+        p {
+            margin-left: 0.5rem;
+        }
+    }
+
+    button {
+        background-color: $main-blue;
+        width: 85%;
+        height: 2.5rem;
+        margin-top: 1.5rem;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        border-color: $main-blue;
+
+        &:hover {
+            background-color: $secondary-blue;
+        }
+    }
+}
+
+//! MODAL ////////////////////////////////////////////////////////////////////////////////////////////////
+
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(128, 128, 128, 0.4);
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+
+    &-inner {
+        background-color: $main-gray;
+        width: 25rem;
+        height: 7rem;
+        padding: 1rem 1rem;
+        border-right: 15px solid #fff;
+        border-radius: 10px 0 0 10px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        &__text {
+            color: #fff;
+            width: 100%;
+            font-size: 1.2rem;
+            text-align: justify;
+            margin-bottom: 1rem;
+        }
+
+        &__buttons {
+            width: 100%;
+            padding: 1rem 0rem;
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            button {
+                width: 7rem;
+                height: 2rem;
+                margin-left: 0.5rem;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+//! ERROR ////////////////////////////////////////////////////////////////////////////////////////////////
 .error {
     color: $error-secondary;
     width: 100%;
@@ -406,8 +691,32 @@ body {
     }
 
     .top {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
         &-search {
-            width: 75%;
+            width: 55%;
+
+            form {
+                background-color: $main-gray;
+                width: 90%;
+                height: 80%;
+                border-radius: 5px;
+
+                input {
+                    background-color: transparent;
+                    color: #fff;
+                    width: 75%;
+                    height: 100%;
+                    font-size: 1.2rem;
+                    border: none;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
         }
 
         &-logo {
@@ -418,6 +727,7 @@ body {
 
         &-links {
             width: 5%;
+            margin-left: 2.5rem;
 
             svg {
                 margin: 0 1rem 0 0;
@@ -438,5 +748,13 @@ body {
                 font-size: 0.7rem;
             }
         }
+    }
+
+    .account {
+        right: -310%;
+    }
+
+    .bookmarks {
+        right: -310%;
     }
 }

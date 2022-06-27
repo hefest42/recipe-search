@@ -1,8 +1,23 @@
+import { useState } from "react";
+
 import Container from "./components/Container";
 
 import { Routes, Route, Navigate } from "react-router-dom";
 
+import CreateAccount from "./components/Create-Account/CreateAccount";
+import LogIn from "./components/Log-in/LogIn";
+
 function App() {
+    const [loggedInAccount, setLoggedInAccount] = useState({
+        bookmarks: [],
+    });
+
+    const logoutAccountHandler = () => {
+        setLoggedInAccount({
+            bookmarks: [],
+        });
+    };
+
     return (
         <Routes>
             <Route path="/" element={<Navigate to="/recipes" />} />
@@ -10,10 +25,12 @@ function App() {
                 path="/recipes/*"
                 element={
                     <div className="app">
-                        <Container />
+                        <Container account={loggedInAccount} onLogoutAccount={logoutAccountHandler} />
                     </div>
                 }
             />
+            <Route path="create-account" element={<CreateAccount />} />
+            <Route path="log-in" element={<LogIn logInAccount={setLoggedInAccount} />} />
         </Routes>
     );
 }
