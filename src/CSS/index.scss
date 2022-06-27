@@ -436,6 +436,7 @@ body {
             min-width: 5rem;
             max-width: 5rem;
             height: 100%;
+            cursor: pointer;
 
             img {
                 width: 100%;
@@ -445,18 +446,32 @@ body {
         }
 
         &__title {
+            color: $border-gray;
             min-width: 10rem;
             max-width: 10rem;
             height: 100%;
             font-size: 0.9rem;
             text-align: center;
             overflow: hidden;
+            cursor: pointer;
+
+            &:hover {
+                color: #fff;
+            }
         }
 
         &__link,
         &__delete {
             height: 100%;
             cursor: pointer;
+
+            svg {
+                color: $border-gray;
+
+                &:hover {
+                    color: #fff;
+                }
+            }
         }
     }
 }

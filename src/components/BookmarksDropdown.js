@@ -17,7 +17,9 @@ const BookmarksDropdown = ({ account, changeBookmarksDropdown, bookmarks, update
     return (
         <div className="bookmarks" onMouseLeave={() => changeBookmarksDropdown(false)}>
             {!account.username && <p className="bookmarks-empty">To save bookmarks, you first need to create an account</p>}
-            {account.username && <p className="bookmarks-empty">You have no bookmarks. Find a recipe you like, and bookmark it!</p>}
+            {account.username && modifiedBookmarks.length === 0 && (
+                <p className="bookmarks-empty">You have no bookmarks. Find a recipe you like, and bookmark it!</p>
+            )}
 
             {modifiedBookmarks.map((bm, i) => (
                 <div className="bookmarks-item" key={i}>
