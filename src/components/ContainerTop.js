@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { BsSearch, BsFillBookmarkFill } from "react-icons/bs";
+import { BsSearch, BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { VscAccount } from "react-icons/vsc";
 
@@ -64,7 +64,7 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
                 </div>
                 <div className="top-links">
                     <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
-                        BOOKMARKS <BsFillBookmarkFill />
+                        BOOKMARKS {accountBookmarks.slice(1).length === 0 ? <BsBookmark /> : <BsFillBookmarkFill />}
                     </div>
                     <div className="top-links_container">
                         <VscAccount onClick={() => setShowAccount((state) => !state)} />
