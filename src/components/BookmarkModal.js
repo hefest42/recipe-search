@@ -8,10 +8,10 @@ const BookmarkModal = ({ showModal, setBookmarkModal }) => {
             {showModal && (
                 <div className="modal centered">
                     <div className="modal-inner">
-                        <div className="modal-inner__text">In order to bookmark a recipe, you need to create an account</div>
+                        <div className="modal-inner__text">In order to bookmark a recipe, you need to log in</div>
                         <div className="modal-inner__buttons">
-                            <Link to="/create-account">
-                                <button>Create Account</button>
+                            <Link to="/log-in">
+                                <button>Log In</button>
                             </Link>
                             <button onClick={() => setBookmarkModal(false)}>Cancel</button>
                         </div>
