@@ -8,12 +8,17 @@ import { VscAccount } from "react-icons/vsc";
 
 import AccountDropdown from "./AccountDropdown";
 import BookmarksDropdown from "./BookmarksDropdown";
+import PreviousSearches from "./PreviousSearches";
+
+const previousSearches = ["pizza", "steak", "chicken"];
 
 const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookmarks, logoutAccount }) => {
     const navigate = useNavigate();
-    const [showSearchWarning, setShowSearchWarning] = useState(false);
-    const [showBookmarks, setShowBookmarks] = useState(false);
-    const [showAccount, setShowAccount] = useState(false);
+    const [showSearchWarning, setShowSearchWarning] = useState(false); // for displaying search information
+    const [showBookmarks, setShowBookmarks] = useState(false); // for displaying bookmarks dropdown
+    const [showAccount, setShowAccount] = useState(false); // for displaying Account dropdown menu
+    const [showPreviousSearches, setShowPreviousSearches] = useState(false);
+    const [activeSearchIndex, setActiveSearchIndex] = useState("");
     const foodRef = useRef();
 
     const searchHandler = (e) => {
@@ -26,9 +31,26 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
         setShowSearchWarning(false);
     };
 
+    const keyPressHandler = (e) => {
+        switch (e.key) {
+            case "ArrowDown":
+                if (activeSearchIndex === "" || activeSearchIndex === previousSearches.length - 1) setActiveSearchIndex(0);
+                else setActiveSearchIndex((state) => state + 1);
+                break;
+
+            case "ArrowUp":
+                if (activeSearchIndex === "" || activeSearchIndex === 0) setActiveSearchIndex(previousSearches.length - 1);
+                else setActiveSearchIndex((state) => state - 1);
+                break;
+
+            default:
+                break;
+        }
+    };
+
     return (
         <>
-            <div className="top">
+            <div className="top" onKeyDown={keyPressHandler} tabIndex={0}>
                 <div className="top-logo">
                     <Link to="/recipes">
                         <p>RECIPE SEARCH</p>
@@ -39,8 +61,17 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
                         <div className="top-search__svg centered">
                             <BsSearch />
                         </div>
-                        <input type="text" ref={foodRef} onFocus={() => setShowSearchWarning(true)} />
+                        <input
+                            type="text"
+                            ref={foodRef}
+                            onFocus={() => setShowPreviousSearches(true)}
+                            onBlur={() => setShowPreviousSearches(false)}
+                        />
                         <button>SEARCH</button>
+
+                        {showPreviousSearches && (
+                            <PreviousSearches searches={previousSearches} index={activeSearchIndex} updateIndex={setActiveSearchIndex} />
+                        )}
 
                         {showSearchWarning && (
                             <div
