@@ -63,24 +63,17 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
                     </form>
                 </div>
                 <div className="top-links">
-                    <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
+                    <div className="top-links_container" onMouseEnter={() => setShowBookmarks(true)} onMouseLeave={() => setShowBookmarks(false)}>
                         BOOKMARKS {accountBookmarks.slice(1).length === 0 ? <BsBookmark /> : <BsFillBookmarkFill />}
+                        {showBookmarks && (
+                            <BookmarksDropdown account={loggedInAccount} bookmarks={accountBookmarks} updatedBookmarks={onUpdateAccountBookmarks} />
+                        )}
                     </div>
-                    <div className="top-links_container">
-                        <VscAccount onClick={() => setShowAccount((state) => !state)} />
-                    </div>
-                    {showAccount && (
-                        <AccountDropdown changeAccountDropdown={setShowAccount} accountUsername={loggedInAccount.username} logout={logoutAccount} />
-                    )}
 
-                    {showBookmarks && (
-                        <BookmarksDropdown
-                            account={loggedInAccount}
-                            changeBookmarksDropdown={setShowBookmarks}
-                            bookmarks={accountBookmarks}
-                            updatedBookmarks={onUpdateAccountBookmarks}
-                        />
-                    )}
+                    <div className="top-links_container" onMouseEnter={() => setShowAccount(true)} onMouseLeave={() => setShowAccount(false)}>
+                        <VscAccount />
+                        {showAccount && <AccountDropdown accountUsername={loggedInAccount.username} logout={logoutAccount} />}
+                    </div>
                 </div>
             </div>
         </>

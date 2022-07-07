@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-const BookmarksDropdown = ({ account, changeBookmarksDropdown, bookmarks, updatedBookmarks }) => {
+const BookmarksDropdown = ({ account, bookmarks, updatedBookmarks }) => {
     const navigate = useNavigate();
 
     const modifiedBookmarks = bookmarks.slice(1);
@@ -15,7 +15,7 @@ const BookmarksDropdown = ({ account, changeBookmarksDropdown, bookmarks, update
     };
 
     return (
-        <div className="bookmarks" onMouseLeave={() => changeBookmarksDropdown(false)}>
+        <div className="bookmarks">
             {!account.username && <p className="bookmarks-empty">To save bookmarks, you first need to create an account</p>}
             {account.username && modifiedBookmarks.length === 0 && (
                 <p className="bookmarks-empty">You have no bookmarks. Find a recipe you like, and bookmark it!</p>

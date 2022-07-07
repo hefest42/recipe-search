@@ -2,17 +2,16 @@ import React from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
-const AccountDropdown = ({ accountUsername, changeAccountDropdown, logout }) => {
+const AccountDropdown = ({ accountUsername, logout }) => {
     const navigate = useNavigate();
 
     const logoutHandler = () => {
         logout();
-        changeAccountDropdown(false);
         navigate(0);
     };
 
     return (
-        <div className="account" onMouseLeave={() => changeAccountDropdown(false)}>
+        <div className="account">
             {!accountUsername && (
                 <Link to={"/log-in"}>
                     <p className="account-link">Log In</p>
