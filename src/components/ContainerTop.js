@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { BsSearch, BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
+import { BsFillInfoSquareFill, BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { VscAccount } from "react-icons/vsc";
 
@@ -12,16 +12,24 @@ import PreviousSearches from "./PreviousSearches";
 
 const previousSearches = ["pizza", "steak", "chicken"];
 
-//TODO fix search warning
-
 const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookmarks, logoutAccount }) => {
     const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false); // for displaying search information
     const [showBookmarks, setShowBookmarks] = useState(false); // for displaying bookmarks dropdown
     const [showAccount, setShowAccount] = useState(false); // for displaying Account dropdown menu
-    const [showPreviousSearches, setShowPreviousSearches] = useState(false);
-    const [activeSearchIndex, setActiveSearchIndex] = useState("");
-    const [searchInput, setSearchInput] = useState("");
+    const [showPreviousSearches, setShowPreviousSearches] = useState(false); // for displaying previous searches dropdown menu
+    const [activeSearchIndex, setActiveSearchIndex] = useState(""); // index of the selected previous search
+    const [searchInput, setSearchInput] = useState(""); // value from the search input
+
+    const updatePreviousSearchTerms = () => {
+        fetch(`https://recipedb-3c8b3-default-rtdb.europe-west1.firebasedatabase.app/accounts/${loggedInAccount.accountKey}.json`, {
+            method: "PATCH",
+            body: JSON.stringify({ previousSearchTerms: "test" }),
+            headers: {
+                "CONTENT-TYPE": "application/json",
+            },
+        });
+    };
 
     const searchHandler = (e) => {
         e.preventDefault();
@@ -68,25 +76,28 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
                 <div className="top-search centered">
                     <form className="centered" onSubmit={searchHandler}>
                         <div className="top-search__svg centered">
-                            <BsSearch />
+                            <BsFillInfoSquareFill onClick={() => setShowSearchWarning(true)} />
                         </div>
                         <input
                             type="text"
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
-                            onFocus={() => setShowPreviousSearches(true)}
+                            onFocus={() => {
+                                setShowPreviousSearches(true);
+                                setShowSearchWarning(false);
+                            }}
                             onBlur={() => {
                                 setTimeout(() => {
                                     setShowPreviousSearches(false);
                                     setSearchInput("");
-                                }, 250);
+                                }, 150);
                             }}
                         />
                         <button>SEARCH</button>
 
                         {showPreviousSearches && (
                             <PreviousSearches
-                                searches={previousSearches}
+                                account={loggedInAccount}
                                 index={activeSearchIndex}
                                 updateIndex={setActiveSearchIndex}
                                 submitSearchTerm={searchHandler}

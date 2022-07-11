@@ -15,7 +15,7 @@ const CreateAccount = () => {
     const [usernameInputStyle, setUsernameInputStyle] = useState(0);
     const [passwordInputStyle, setPasswordInputStyle] = useState(0);
 
-    const submitAccountHandler = async e => {
+    const submitAccountHandler = async (e) => {
         e.preventDefault();
 
         if (usernameInputStyle !== 1 || passwordInputStyle !== 1) return;
@@ -24,6 +24,7 @@ const CreateAccount = () => {
             name: inputedUsername,
             password: inputedPassword,
             bookmarks: [""],
+            previousSearchTerms: ["search"],
         };
 
         try {
@@ -42,7 +43,7 @@ const CreateAccount = () => {
 
     // checking for username availability
     useEffect(() => {
-        const usernameFree = allAccounts.filter(acc => acc.username === inputedUsername);
+        const usernameFree = allAccounts.filter((acc) => acc.username === inputedUsername);
 
         if (inputedUsername === "") setUsernameInputStyle(0);
         if (inputedUsername !== "" && usernameFree.length === 0) setUsernameInputStyle(1);
@@ -91,7 +92,7 @@ const CreateAccount = () => {
                     <div className="form-input_container">
                         <label htmlFor="username">Username</label>
                         <div className={inputStyles[usernameInputStyle]}>
-                            <input type="text" id="username" name="username" onChange={e => setInputedUsername(e.target.value)} />
+                            <input type="text" id="username" name="username" onChange={(e) => setInputedUsername(e.target.value)} />
                             <div className="centered">{svgArr[usernameInputStyle]}</div>
                         </div>
                     </div>
@@ -99,7 +100,7 @@ const CreateAccount = () => {
                     <div className="form-input_container">
                         <label htmlFor="pword">Password</label>
                         <div className={inputStyles[passwordInputStyle]}>
-                            <input type="password" id="pword" name="pword" autoComplete="yes" onChange={e => setInputedPassword(e.target.value)} />
+                            <input type="password" id="pword" name="pword" autoComplete="yes" onChange={(e) => setInputedPassword(e.target.value)} />
                             <div className="centered">{svgArr[passwordInputStyle]}</div>
                         </div>
                         <div className="form-info">

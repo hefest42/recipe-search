@@ -31,6 +31,7 @@ const LogIn = ({ logInAccount }) => {
                     username: data[key].name,
                     password: data[key].password,
                     bookmarks: data[key].bookmarks,
+                    previousSearchTerms: data[key].previousSearchTerms,
                 });
             }
         } catch (error) {
