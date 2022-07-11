@@ -20,15 +20,14 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
     const [showPreviousSearches, setShowPreviousSearches] = useState(false); // for displaying previous searches dropdown menu
     const [activeSearchIndex, setActiveSearchIndex] = useState(""); // index of the selected previous search
     const [searchInput, setSearchInput] = useState(""); // value from the search input
+    const [searchHistory, setSearchHistory] = useState(loggedInAccount.previousSearchTerms ? [...loggedInAccount.previousSearchTerms] : [""]);
 
-    const updatePreviousSearchTerms = () => {
-        fetch(`https://recipedb-3c8b3-default-rtdb.europe-west1.firebasedatabase.app/accounts/${loggedInAccount.accountKey}.json`, {
-            method: "PATCH",
-            body: JSON.stringify({ previousSearchTerms: "test" }),
-            headers: {
-                "CONTENT-TYPE": "application/json",
-            },
-        });
+    const updatePreviousSearchTerms = (term) => {
+        if (!loggedInAccount.username) return;
+
+        if (searchHistory.includes(term)) {
+            setSearchHistory([term, ...searchHistory.filter((terms) => terms !== term)]);
+        } else setSearchHistory((state) => [term, ...state]);
     };
 
     const searchHandler = (e) => {
@@ -37,6 +36,7 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
         const search = searchInput;
         navigate(`${search}`);
 
+        updatePreviousSearchTerms(search);
         setShowPreviousSearches(false);
         setShowSearchWarning(false);
         setSearchInput("");
@@ -56,6 +56,19 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
                 break;
         }
     };
+
+    // updating search history
+    useEffect(() => {
+        if (!loggedInAccount.accountKey) return;
+
+        fetch(`https://recipedb-3c8b3-default-rtdb.europe-west1.firebasedatabase.app/accounts/${loggedInAccount.accountKey}.json`, {
+            method: "PATCH",
+            body: JSON.stringify({ previousSearchTerms: searchHistory }),
+            headers: {
+                "CONTENT-TYPE": "application/json",
+            },
+        });
+    }, [loggedInAccount, searchHistory]);
 
     useEffect(() => {
         if (activeSearchIndex === "") return;
@@ -97,7 +110,7 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
 
                         {showPreviousSearches && (
                             <PreviousSearches
-                                account={loggedInAccount}
+                                historyTerms={searchHistory}
                                 index={activeSearchIndex}
                                 updateIndex={setActiveSearchIndex}
                                 submitSearchTerm={searchHandler}
