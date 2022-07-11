@@ -1,6 +1,6 @@
 import React from "react";
 
-const PreviousSearches = ({ searches, index, updateIndex }) => {
+const PreviousSearches = ({ searches, index, updateIndex, submitSearchTerm }) => {
     return (
         <div className="searches">
             <ul>
@@ -10,6 +10,7 @@ const PreviousSearches = ({ searches, index, updateIndex }) => {
                         key={i}
                         onMouseEnter={() => updateIndex(i)}
                         onMouseLeave={() => updateIndex("")}
+                        onClick={(e) => submitSearchTerm(e)}
                     >
                         {search}
                     </li>

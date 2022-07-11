@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,6 +12,8 @@ import PreviousSearches from "./PreviousSearches";
 
 const previousSearches = ["pizza", "steak", "chicken"];
 
+//TODO fix search warning
+
 const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookmarks, logoutAccount }) => {
     const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false); // for displaying search information
@@ -19,38 +21,45 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
     const [showAccount, setShowAccount] = useState(false); // for displaying Account dropdown menu
     const [showPreviousSearches, setShowPreviousSearches] = useState(false);
     const [activeSearchIndex, setActiveSearchIndex] = useState("");
-    const foodRef = useRef();
+    const [searchInput, setSearchInput] = useState("");
 
     const searchHandler = (e) => {
         e.preventDefault();
 
-        const search = foodRef.current.value;
+        const search = searchInput;
         navigate(`${search}`);
 
-        foodRef.current.value = "";
+        setShowPreviousSearches(false);
         setShowSearchWarning(false);
+        setSearchInput("");
     };
 
-    const keyPressHandler = (e) => {
+    const arrowPressHandler = (e) => {
         switch (e.key) {
             case "ArrowDown":
                 if (activeSearchIndex === "" || activeSearchIndex === previousSearches.length - 1) setActiveSearchIndex(0);
                 else setActiveSearchIndex((state) => state + 1);
                 break;
-
             case "ArrowUp":
                 if (activeSearchIndex === "" || activeSearchIndex === 0) setActiveSearchIndex(previousSearches.length - 1);
                 else setActiveSearchIndex((state) => state - 1);
                 break;
-
             default:
                 break;
         }
     };
 
+    useEffect(() => {
+        if (activeSearchIndex === "") return;
+
+        const searchTerm = previousSearches[activeSearchIndex];
+
+        setSearchInput(searchTerm);
+    }, [activeSearchIndex]);
+
     return (
         <>
-            <div className="top" onKeyDown={keyPressHandler} tabIndex={0}>
+            <div className="top" onKeyDown={arrowPressHandler} tabIndex={0}>
                 <div className="top-logo">
                     <Link to="/recipes">
                         <p>RECIPE SEARCH</p>
@@ -63,14 +72,25 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
                         </div>
                         <input
                             type="text"
-                            ref={foodRef}
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
                             onFocus={() => setShowPreviousSearches(true)}
-                            onBlur={() => setShowPreviousSearches(false)}
+                            onBlur={() => {
+                                setTimeout(() => {
+                                    setShowPreviousSearches(false);
+                                    setSearchInput("");
+                                }, 250);
+                            }}
                         />
                         <button>SEARCH</button>
 
                         {showPreviousSearches && (
-                            <PreviousSearches searches={previousSearches} index={activeSearchIndex} updateIndex={setActiveSearchIndex} />
+                            <PreviousSearches
+                                searches={previousSearches}
+                                index={activeSearchIndex}
+                                updateIndex={setActiveSearchIndex}
+                                submitSearchTerm={searchHandler}
+                            />
                         )}
 
                         {showSearchWarning && (
