@@ -23,8 +23,12 @@
     margin-top: 1rem;
 
     &__image {
-        width: 100%;
+        width: 85%;
         height: 20rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     &__title {
