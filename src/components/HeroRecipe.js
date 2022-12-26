@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import LoadingSpinner from "./LoadingSpinner";
 import Error from "./Error";
 import BookmarkModal from "./BookmarkModal";
+import HeroRecipeSkeleton from "./HeroRecipeSkeleton";
 
 import { useParams } from "react-router-dom";
 
@@ -60,11 +61,9 @@ const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }
         getID(id);
     }, [id, getID]);
 
-    // console.log(account);
-
     return (
         <div className="hero-container ">
-            {pageState === "loading" && <LoadingSpinner />}
+            {pageState === "loading" && <HeroRecipeSkeleton />}
 
             {pageState === "hero" && (
                 <div className="hero">
@@ -103,7 +102,8 @@ const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }
                     </div>
                     <div className="hero-info centered-column">
                         <h3>
-                            For more recipes from <span className="hero-highlight">{sortedRecipe.publisher}</span> click the button.
+                            For more recipes from <span className="hero-highlight">{sortedRecipe.publisher}</span> click
+                            the button.
                         </h3>
 
                         <a href={sortedRecipe.publisherUrl} target="_blank" rel="noreferrer">
