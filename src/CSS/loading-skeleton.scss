@@ -19,16 +19,12 @@
 }
 
 .hero-skeleton {
-    width: 100%;
+    width: 95%;
     margin-top: 1rem;
 
     &__image {
-        width: 85%;
+        width: 100%;
         height: 20rem;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     &__title {
