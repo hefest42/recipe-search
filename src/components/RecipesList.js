@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 
-import LoadingSpinner from "./LoadingSpinner";
 import RecipeListNavigation from "./RecipeListNavigation";
+import RecipesListSkeleton from "./RecipesListSkeleton";
 import Error from "./Error";
 
 import { Link, useParams } from "react-router-dom";
@@ -9,7 +9,7 @@ import { Link, useParams } from "react-router-dom";
 // TODO set it to search based on the params
 const RecipesList = ({ getRecipeID }) => {
     const params = useParams();
-    const [pageState, setPageState] = useState("");
+    const [pageState, setPageState] = useState("loading");
     const [recipes, setRecipes] = useState([]);
     const [slicedRecipes, setSlicedRecipes] = useState([]);
     const [page, setPage] = useState(0);
@@ -55,14 +55,16 @@ const RecipesList = ({ getRecipeID }) => {
     return (
         <Fragment>
             <div className="recipeList">
-                {pageState === "loading" && <LoadingSpinner />}
+                {pageState === "loading" && <RecipesListSkeleton />}
 
                 {pageState === "recipes" &&
                     slicedRecipes.map((recipe, i) => (
                         <Link to={`${recipe.recipeId}`} key={i}>
                             <div
                                 className={
-                                    recipe.recipeId === getRecipeID ? "recipeList-item recipeList-active centered" : "recipeList-item centered"
+                                    recipe.recipeId === getRecipeID
+                                        ? "recipeList-item recipeList-active centered"
+                                        : "recipeList-item centered"
                                 }
                             >
                                 <div className="recipeList-item__image">
@@ -78,9 +80,19 @@ const RecipesList = ({ getRecipeID }) => {
                         </Link>
                     ))}
 
-                {pageState === "error" && <Error size="1.5" errorMessage={`Couldn't find anything for the term ${search}. Please try again`} />}
+                {pageState === "error" && (
+                    <Error
+                        size="1.5"
+                        errorMessage={`Couldn't find anything for the term ${search}. Please try again`}
+                    />
+                )}
             </div>
-            <RecipeListNavigation allRecipes={recipes} getSlicedRecipes={setSlicedRecipes} page={page} pageHandler={setPage} />
+            <RecipeListNavigation
+                allRecipes={recipes}
+                getSlicedRecipes={setSlicedRecipes}
+                page={page}
+                pageHandler={setPage}
+            />
         </Fragment>
     );
 };
