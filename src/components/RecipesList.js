@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 
 import RecipeListNavigation from "./RecipeListNavigation";
 import RecipesListSkeleton from "./RecipesListSkeleton";
@@ -53,7 +53,7 @@ const RecipesList = ({ getRecipeID }) => {
     }, [search]);
 
     return (
-        <Fragment>
+        <>
             <div className="recipeList">
                 {pageState === "loading" && <RecipesListSkeleton />}
 
@@ -93,7 +93,7 @@ const RecipesList = ({ getRecipeID }) => {
                 page={page}
                 pageHandler={setPage}
             />
-        </Fragment>
+        </>
     );
 };
 

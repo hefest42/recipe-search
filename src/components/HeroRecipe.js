@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
-import LoadingSpinner from "./LoadingSpinner";
 import Error from "./Error";
 import BookmarkModal from "./BookmarkModal";
 import HeroRecipeSkeleton from "./HeroRecipeSkeleton";
@@ -11,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
-const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }) => {
+const HeroRecipe = ({ account, setRecipeID, accountBookmarks, updateAccountBookmarks }) => {
     const [pageState, setPageState] = useState("");
     const [sortedRecipe, setSortedRecipe] = useState({});
     const [showBookmarkModal, setShowBookmarkModal] = useState(false);
@@ -58,8 +57,8 @@ const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }
         };
 
         fetchRecipeHandler();
-        getID(id);
-    }, [id, getID]);
+        setRecipeID(id);
+    }, [id]);
 
     return (
         <div className="hero-container ">

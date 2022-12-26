@@ -8,10 +8,6 @@ import RecipesList from "./RecipesList";
 const ContainerBottom = ({ acc, loggedInBookmarks, onUpdateAccountBookmarks }) => {
     const [recipeID, setRecipeID] = useState("");
 
-    const getRecipeIDHandler = (id) => {
-        setRecipeID(id);
-    };
-
     return (
         <div className="down centered">
             <div className="down-left">
@@ -24,7 +20,7 @@ const ContainerBottom = ({ acc, loggedInBookmarks, onUpdateAccountBookmarks }) =
                         element={
                             <HeroRecipe
                                 account={acc}
-                                getID={getRecipeIDHandler}
+                                setRecipeID={setRecipeID}
                                 accountBookmarks={loggedInBookmarks}
                                 updateAccountBookmarks={onUpdateAccountBookmarks}
                             />

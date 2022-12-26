@@ -9,11 +9,11 @@ const RecipeListNavigation = ({ allRecipes, getSlicedRecipes, page, pageHandler 
 
     const pageDecreaseHandler = () => {
         if (page === 0) return;
-        else pageHandler(state => state - 1);
+        else pageHandler((state) => state - 1);
     };
     const pageIncreaseHandler = () => {
         if (page === numberOfPages - 1) return;
-        else pageHandler(state => state + 1);
+        else pageHandler((state) => state + 1);
     };
 
     useEffect(() => {
@@ -55,7 +55,7 @@ const RecipeListNavigation = ({ allRecipes, getSlicedRecipes, page, pageHandler 
                     <>
                         <AiOutlineArrowLeft onClick={pageDecreaseHandler} />
                         <div>{`Pages: ${page + 1}/${numberOfPages}`} </div>
-                        <AiOutlineArrowRight onClick={pageIncreaseHandler} />{" "}
+                        <AiOutlineArrowRight onClick={pageIncreaseHandler} />
                     </>
                 ))}
         </div>
