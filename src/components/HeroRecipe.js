@@ -17,8 +17,6 @@ const HeroRecipe = ({ setRecipeID }) => {
 
     const { id } = params;
 
-    console.log(params);
-
     // fetching hero recipe based on the id in the link
     useEffect(() => {
         if (!id) return;
