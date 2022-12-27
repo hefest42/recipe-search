@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import RecipeListNavigation from "./RecipeListNavigation";
 import RecipesListSkeleton from "./RecipesListSkeleton";
 import Error from "./Error";
 
@@ -12,7 +11,6 @@ const RecipesList = ({ getRecipeID }) => {
     const [pageState, setPageState] = useState("loading");
     const [recipes, setRecipes] = useState([]);
     const [slicedRecipes, setSlicedRecipes] = useState([]);
-    const [page, setPage] = useState(0);
 
     const { search } = params;
 
@@ -49,7 +47,6 @@ const RecipesList = ({ getRecipeID }) => {
         };
 
         getRecipesHandler();
-        setPage(0);
     }, [search]);
 
     return (
@@ -87,12 +84,6 @@ const RecipesList = ({ getRecipeID }) => {
                     />
                 )}
             </div>
-            <RecipeListNavigation
-                allRecipes={recipes}
-                getSlicedRecipes={setSlicedRecipes}
-                page={page}
-                pageHandler={setPage}
-            />
         </>
     );
 };

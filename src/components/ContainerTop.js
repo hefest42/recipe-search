@@ -9,11 +9,10 @@ import { VscAccount } from "react-icons/vsc";
 import AccountDropdown from "./AccountDropdown";
 import BookmarksDropdown from "./BookmarksDropdown";
 
-const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookmarks, logoutAccount }) => {
+const ContainerTop = ({}) => {
     const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false);
     const [showBookmarks, setShowBookmarks] = useState(false);
-    const [showAccount, setShowAccount] = useState(false);
     const foodRef = useRef();
 
     const searchHandler = (e) => {
@@ -64,23 +63,10 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
                 </div>
                 <div className="top-links">
                     <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
-                        BOOKMARKS {accountBookmarks.slice(1).length === 0 ? <BsBookmark /> : <BsFillBookmarkFill />}
+                        BOOKMARKS <BsBookmark />
                     </div>
-                    <div className="top-links_container">
-                        <VscAccount onClick={() => setShowAccount((state) => !state)} />
-                    </div>
-                    {showAccount && (
-                        <AccountDropdown changeAccountDropdown={setShowAccount} accountUsername={loggedInAccount.username} logout={logoutAccount} />
-                    )}
 
-                    {showBookmarks && (
-                        <BookmarksDropdown
-                            account={loggedInAccount}
-                            changeBookmarksDropdown={setShowBookmarks}
-                            bookmarks={accountBookmarks}
-                            updatedBookmarks={onUpdateAccountBookmarks}
-                        />
-                    )}
+                    {showBookmarks && <BookmarksDropdown />}
                 </div>
             </div>
         </>

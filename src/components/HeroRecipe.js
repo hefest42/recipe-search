@@ -10,19 +10,14 @@ import { useParams } from "react-router-dom";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
-const HeroRecipe = ({ account, setRecipeID, accountBookmarks, updateAccountBookmarks }) => {
+const HeroRecipe = ({ setRecipeID }) => {
+    const params = useParams();
     const [pageState, setPageState] = useState("");
     const [sortedRecipe, setSortedRecipe] = useState({});
-    const [showBookmarkModal, setShowBookmarkModal] = useState(false);
-    const params = useParams();
 
     const { id } = params;
 
-    const bookmarkModalHandler = () => {
-        if (account.username) return;
-
-        setShowBookmarkModal(true);
-    };
+    console.log(params);
 
     // fetching hero recipe based on the id in the link
     useEffect(() => {
@@ -74,23 +69,7 @@ const HeroRecipe = ({ account, setRecipeID, accountBookmarks, updateAccountBookm
                         <h1>{`${sortedRecipe.title}`}</h1>
                     </div>
 
-                    <div className="hero-bookmark centered">
-                        {accountBookmarks.filter((bmark) => bmark.recipeId === id).length === 1 ? (
-                            <BsFillBookmarkFill
-                                onClick={() => {
-                                    updateAccountBookmarks(id, sortedRecipe);
-                                    bookmarkModalHandler();
-                                }}
-                            />
-                        ) : (
-                            <BsBookmark
-                                onClick={() => {
-                                    updateAccountBookmarks(id, sortedRecipe);
-                                    bookmarkModalHandler();
-                                }}
-                            />
-                        )}
-                    </div>
+                    <div className="hero-bookmark centered"></div>
 
                     <div className="hero-ingredients centered">
                         <ul>
@@ -118,12 +97,6 @@ const HeroRecipe = ({ account, setRecipeID, accountBookmarks, updateAccountBookm
                         </a>
                     </div>
                 </div>
-            )}
-
-            {pageState === "error" && <Error size="2" errorMessage="Oops... Something went wrong, please try again." />}
-            {ReactDOM.createPortal(
-                <BookmarkModal showModal={showBookmarkModal} setBookmarkModal={setShowBookmarkModal} />,
-                document.getElementById("modal-root")
             )}
         </div>
     );
