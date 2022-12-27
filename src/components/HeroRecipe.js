@@ -10,14 +10,13 @@ import { useParams } from "react-router-dom";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
-const HeroRecipe = ({ setRecipeID }) => {
+const HeroRecipe = ({}) => {
     const params = useParams();
     const [pageState, setPageState] = useState("");
     const [sortedRecipe, setSortedRecipe] = useState({});
 
     const { id } = params;
 
-    // fetching hero recipe based on the id in the link
     useEffect(() => {
         if (!id) return;
 
@@ -50,7 +49,6 @@ const HeroRecipe = ({ setRecipeID }) => {
         };
 
         fetchRecipeHandler();
-        setRecipeID(id);
     }, [id]);
 
     return (

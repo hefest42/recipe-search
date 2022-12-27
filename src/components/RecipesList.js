@@ -11,6 +11,8 @@ const RecipesList = ({}) => {
     const params = useParams();
     const [pageState, setPageState] = useState("recipes");
     const [recipes, setRecipes] = useState([]);
+    const [displayedRecipes, setDisplayedRecipes] = useState([]);
+    const [page, setPage] = useState(0);
 
     useEffect(() => {
         if (params.search === "") return;
@@ -24,6 +26,7 @@ const RecipesList = ({}) => {
                 const data = await response.json();
 
                 setRecipes(data.recipes);
+                setDisplayedRecipes(data.recipes.slice(0, 7));
                 setPageState("recipes");
             } catch (error) {}
         };
@@ -31,13 +34,19 @@ const RecipesList = ({}) => {
         fetchRecipesHandler(params.search);
     }, [params.search]);
 
+    useEffect(() => {
+        const index = recipes.findIndex((recipe) => recipe.recipe_id === params["*"]);
+
+        if (page === Math.floor(index / 7)) return;
+    }, [page]);
+
     return (
         <>
             <div className="recipeList">
                 {pageState === "loading" && <RecipesListSkeleton />}
 
                 {pageState === "recipes" &&
-                    recipes.map((recipe, i) => (
+                    displayedRecipes.map((recipe, i) => (
                         <Link to={`${recipe.recipe_id}`} key={i}>
                             <div
                                 className={
@@ -60,7 +69,7 @@ const RecipesList = ({}) => {
                     ))}
             </div>
 
-            <RecipeListNavigation recipes={recipes} />
+            <RecipeListNavigation recipes={recipes} setDisplayedRecipes={setDisplayedRecipes} />
         </>
     );
 };
