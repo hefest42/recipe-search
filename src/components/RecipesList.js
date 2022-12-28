@@ -17,7 +17,7 @@ const RecipesList = ({}) => {
     const test = (allRecipes, id) => {
         const index = allRecipes.findIndex((recipe) => recipe.recipe_id === id);
 
-        const startingPage = Math.ceil(index / 7);
+        const startingPage = Math.ceil((index + 1) / 7);
 
         setPage(startingPage);
     };

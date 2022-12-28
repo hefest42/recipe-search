@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 
 import Error from "./Error";
 import BookmarkModal from "./BookmarkModal";
@@ -16,6 +15,24 @@ const HeroRecipe = ({}) => {
     const [sortedRecipe, setSortedRecipe] = useState({});
 
     const { id } = params;
+
+    const addBookmarkHandler = (bookmark) => {
+        const newBookmark = JSON.stringify(bookmark);
+
+        if (!localStorage.getItem("bookmarks")) {
+            localStorage.setItem("bookmarks", JSON.stringify([newBookmark]));
+            return;
+        }
+
+        const storedBookmarks = localStorage.getItem("bookmarks");
+        const allBookmarks = JSON.parse(storedBookmarks);
+
+        const addNewBookmark = [...allBookmarks, bookmark];
+
+        console.log(addNewBookmark);
+
+        localStorage.setItem("bookmarks", JSON.stringify(addNewBookmark));
+    };
 
     useEffect(() => {
         if (!id) return;
@@ -65,7 +82,9 @@ const HeroRecipe = ({}) => {
                         <h1>{`${sortedRecipe.title}`}</h1>
                     </div>
 
-                    <div className="hero-bookmark centered"></div>
+                    <div className="hero-bookmark centered">
+                        <BsBookmark onClick={() => addBookmarkHandler(sortedRecipe)} />
+                    </div>
 
                     <div className="hero-ingredients centered">
                         <ul>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,6 +13,7 @@ const ContainerTop = ({}) => {
     const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false);
     const [showBookmarks, setShowBookmarks] = useState(false);
+    const [bookmarks, setBookmarks] = useState([]);
     const foodRef = useRef();
 
     const searchHandler = (e) => {
@@ -24,6 +25,20 @@ const ContainerTop = ({}) => {
         foodRef.current.value = "";
         setShowSearchWarning(false);
     };
+
+    const getBookmarks = () => {
+        const retrievedBookmarks = localStorage.getItem("bookmarks");
+
+        const bookmarks = JSON.parse(retrievedBookmarks);
+
+        console.log(bookmarks);
+    };
+
+    useEffect(() => {
+        const retrievedBookmarks = localStorage.getItem("bookmarks");
+
+        if (!retrievedBookmarks) return;
+    }, [localStorage]);
 
     return (
         <>
@@ -63,7 +78,7 @@ const ContainerTop = ({}) => {
                 </div>
                 <div className="top-links">
                     <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
-                        BOOKMARKS <BsBookmark />
+                        BOOKMARKS <BsBookmark onClick={getBookmarks} />
                     </div>
 
                     {showBookmarks && <BookmarksDropdown />}
