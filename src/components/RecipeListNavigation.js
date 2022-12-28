@@ -1,52 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { useParams } from "react-router";
 
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
-const RecipeListNavigation = ({ recipes, setDisplayedRecipes }) => {
+const RecipeListNavigation = ({ recipes, page, setPage }) => {
     const params = useParams();
-    const [page, setPage] = useState(0);
     const numberOfPages = Math.ceil(recipes.length / 7);
 
-    const pageIncreaseHandler = () => {
-        setPage((state) => state + 1);
+    const pageDecreaseHandler = () => {
+        if (page === 1) return;
 
-        const start = page * 7;
-        const end = (page + 1) * 7;
-
-        const slicedRecipes = recipes.slice(start, end);
-        console.log(slicedRecipes);
-        setDisplayedRecipes(slicedRecipes);
+        setPage((state) => state - 1);
     };
 
-    useEffect(() => {
-        const index = recipes.findIndex((recipe) => recipe.recipe_id === params["*"]);
+    const pageIncreaseHandler = () => {
+        if (page === numberOfPages) return;
 
-        setPage(Math.floor(index / 7));
-    }, [recipes, params["*"]]);
+        setPage((state) => state + 1);
+    };
 
     return (
         <div className="navigation ">
-            {(page === 0 && (
+            {(page === 1 && (
                 <>
                     <div className="navigation-empty"></div>
-                    <div>{`Pages: ${page + 1}/${numberOfPages}`} </div>
-                    <AiOutlineArrowRight onClick={() => setPage((state) => state + 1)} />
+                    <div>{`Pages: ${page}/${numberOfPages}`} </div>
+                    <AiOutlineArrowRight onClick={pageIncreaseHandler} />
                 </>
             )) ||
-                (page === numberOfPages - 1 && (
+                (page === numberOfPages && (
                     <>
-                        <AiOutlineArrowLeft onClick={() => {}} />
-                        <div>{`Pages: ${page + 1}/${numberOfPages}`} </div>
+                        <AiOutlineArrowLeft onClick={pageDecreaseHandler} />
+                        <div>{`Pages: ${page}/${numberOfPages}`} </div>
                         <div className="navigation-empty"></div>
                     </>
                 )) ||
-                (page > 0 && (
+                (page > 1 && (
                     <>
-                        <AiOutlineArrowLeft onClick={() => {}} />
-                        <div>{`Pages: ${page + 1}/${numberOfPages}`} </div>
-                        <AiOutlineArrowRight onClick={() => pageIncreaseHandler()} />
+                        <AiOutlineArrowLeft onClick={pageDecreaseHandler} />
+                        <div>{`Pages: ${page}/${numberOfPages}`} </div>
+                        <AiOutlineArrowRight onClick={pageIncreaseHandler} />
                     </>
                 ))}
         </div>

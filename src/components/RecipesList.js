@@ -12,7 +12,15 @@ const RecipesList = ({}) => {
     const [pageState, setPageState] = useState("recipes");
     const [recipes, setRecipes] = useState([]);
     const [displayedRecipes, setDisplayedRecipes] = useState([]);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
+
+    const test = (allRecipes, id) => {
+        const index = allRecipes.findIndex((recipe) => recipe.recipe_id === id);
+
+        const startingPage = Math.ceil(index / 7);
+
+        setPage(startingPage);
+    };
 
     useEffect(() => {
         if (params.search === "") return;
@@ -26,7 +34,7 @@ const RecipesList = ({}) => {
                 const data = await response.json();
 
                 setRecipes(data.recipes);
-                setDisplayedRecipes(data.recipes.slice(0, 7));
+                test(data.recipes, params["*"]);
                 setPageState("recipes");
             } catch (error) {}
         };
@@ -35,9 +43,12 @@ const RecipesList = ({}) => {
     }, [params.search]);
 
     useEffect(() => {
-        const index = recipes.findIndex((recipe) => recipe.recipe_id === params["*"]);
+        const start = (page - 1) * 7;
+        const end = page * 7;
 
-        if (page === Math.floor(index / 7)) return;
+        const slicedRecipes = recipes.slice(start, end);
+
+        setDisplayedRecipes(slicedRecipes);
     }, [page]);
 
     return (
@@ -69,7 +80,12 @@ const RecipesList = ({}) => {
                     ))}
             </div>
 
-            <RecipeListNavigation recipes={recipes} setDisplayedRecipes={setDisplayedRecipes} />
+            <RecipeListNavigation
+                recipes={recipes}
+                page={page}
+                setPage={setPage}
+                setDisplayedRecipes={setDisplayedRecipes}
+            />
         </>
     );
 };
