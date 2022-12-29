@@ -9,11 +9,10 @@ import { VscAccount } from "react-icons/vsc";
 import AccountDropdown from "./AccountDropdown";
 import BookmarksDropdown from "./BookmarksDropdown";
 
-const ContainerTop = ({}) => {
+const ContainerTop = ({ bookmarks, setBookmarks }) => {
     const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false);
     const [showBookmarks, setShowBookmarks] = useState(false);
-    const [bookmarks, setBookmarks] = useState([]);
     const foodRef = useRef();
 
     const searchHandler = (e) => {
@@ -25,20 +24,6 @@ const ContainerTop = ({}) => {
         foodRef.current.value = "";
         setShowSearchWarning(false);
     };
-
-    const getBookmarks = () => {
-        const retrievedBookmarks = localStorage.getItem("bookmarks");
-
-        const bookmarks = JSON.parse(retrievedBookmarks);
-
-        console.log(bookmarks);
-    };
-
-    useEffect(() => {
-        const retrievedBookmarks = localStorage.getItem("bookmarks");
-
-        if (!retrievedBookmarks) return;
-    }, [localStorage]);
 
     return (
         <>
@@ -76,12 +61,13 @@ const ContainerTop = ({}) => {
                         )}
                     </form>
                 </div>
+
                 <div className="top-links">
                     <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
-                        BOOKMARKS <BsBookmark onClick={getBookmarks} />
+                        BOOKMARKS {!bookmarks === [] ? <BsFillBookmarkFill /> : <BsBookmark />}
                     </div>
 
-                    {showBookmarks && <BookmarksDropdown />}
+                    {showBookmarks && <BookmarksDropdown bookmarks={bookmarks} />}
                 </div>
             </div>
         </>
