@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
 import { BsSearch, BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { VscAccount } from "react-icons/vsc";
 
-import AccountDropdown from "./AccountDropdown";
 import BookmarksDropdown from "./BookmarksDropdown";
 
-const ContainerTop = ({ bookmarks, setBookmarks }) => {
+const ContainerTop = ({ bookmarks, managingBookmarks }) => {
     const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false);
     const [showBookmarks, setShowBookmarks] = useState(false);
@@ -64,10 +62,10 @@ const ContainerTop = ({ bookmarks, setBookmarks }) => {
 
                 <div className="top-links">
                     <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
-                        BOOKMARKS {!bookmarks === [] ? <BsFillBookmarkFill /> : <BsBookmark />}
+                        BOOKMARKS {bookmarks.length > 0 ? <BsFillBookmarkFill /> : <BsBookmark />}
                     </div>
 
-                    {showBookmarks && <BookmarksDropdown bookmarks={bookmarks} />}
+                    {showBookmarks && <BookmarksDropdown bookmarks={bookmarks} managingBookmarks={managingBookmarks} />}
                 </div>
             </div>
         </>

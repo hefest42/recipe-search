@@ -5,10 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-const BookmarksDropdown = ({ bookmarks }) => {
+const BookmarksDropdown = ({ bookmarks, managingBookmarks }) => {
     const navigate = useNavigate();
-
-    const deleteBookmark = (id) => {};
 
     return (
         <div className="bookmarks">
@@ -27,7 +25,7 @@ const BookmarksDropdown = ({ bookmarks }) => {
                     </a>
 
                     <div className="bookmarks-item__delete centered">
-                        <RiDeleteBinLine onClick={() => deleteBookmark(bm.recipeId)} />
+                        <RiDeleteBinLine onClick={() => managingBookmarks(bm)} />
                     </div>
                 </div>
             ))}

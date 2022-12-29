@@ -9,30 +9,12 @@ import { useParams } from "react-router-dom";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
-const HeroRecipe = ({}) => {
+const HeroRecipe = ({ bookmarks, managingBookmarks }) => {
     const params = useParams();
     const [pageState, setPageState] = useState("");
     const [sortedRecipe, setSortedRecipe] = useState({});
 
     const { id } = params;
-
-    const addBookmarkHandler = (bookmark) => {
-        const newBookmark = JSON.stringify(bookmark);
-
-        if (!localStorage.getItem("bookmarks")) {
-            localStorage.setItem("bookmarks", JSON.stringify([newBookmark]));
-            return;
-        }
-
-        const storedBookmarks = localStorage.getItem("bookmarks");
-        const allBookmarks = JSON.parse(storedBookmarks);
-
-        const addNewBookmark = [...allBookmarks, bookmark];
-
-        console.log(addNewBookmark);
-
-        localStorage.setItem("bookmarks", JSON.stringify(addNewBookmark));
-    };
 
     useEffect(() => {
         if (!id) return;
@@ -83,7 +65,11 @@ const HeroRecipe = ({}) => {
                     </div>
 
                     <div className="hero-bookmark centered">
-                        <BsBookmark onClick={() => addBookmarkHandler(sortedRecipe)} />
+                        {!bookmarks.filter((bm) => bm.recipeId === sortedRecipe.recipeId).length > 0 ? (
+                            <BsBookmark onClick={() => managingBookmarks(sortedRecipe)} />
+                        ) : (
+                            <BsFillBookmarkFill onClick={() => managingBookmarks(sortedRecipe)} />
+                        )}
                     </div>
 
                     <div className="hero-ingredients centered">
