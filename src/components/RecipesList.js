@@ -19,13 +19,12 @@ const RecipesList = ({}) => {
 
         const startingPage = Math.ceil((index + 1) / 7);
 
-        if (index === 0) {
-            setPage(1);
-        } else setPage(startingPage);
+        if (index === 0 || index === -1) setPage(1);
+        else setPage(startingPage);
     };
 
     useEffect(() => {
-        if (params.search === "") return;
+        if (params.search === "" || params.search === "hero") return;
 
         const fetchRecipesHandler = async (searchTerm) => {
             try {
@@ -49,6 +48,8 @@ const RecipesList = ({}) => {
         const end = page * 7;
 
         const slicedRecipes = recipes.slice(start, end);
+
+        console.log(slicedRecipes);
 
         setDisplayedRecipes(slicedRecipes);
     }, [page]);
@@ -82,12 +83,14 @@ const RecipesList = ({}) => {
                     ))}
             </div>
 
-            <RecipeListNavigation
-                recipes={recipes}
-                page={page}
-                setPage={setPage}
-                setDisplayedRecipes={setDisplayedRecipes}
-            />
+            {displayedRecipes.length > 0 && (
+                <RecipeListNavigation
+                    recipes={recipes}
+                    page={page}
+                    setPage={setPage}
+                    setDisplayedRecipes={setDisplayedRecipes}
+                />
+            )}
         </>
     );
 };

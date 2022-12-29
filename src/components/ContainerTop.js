@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { BsSearch, BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { AiOutlineDown } from "react-icons/ai";
 
 import BookmarksDropdown from "./BookmarksDropdown";
 
@@ -60,9 +61,17 @@ const ContainerTop = ({ bookmarks, managingBookmarks }) => {
                     </form>
                 </div>
 
-                <div className="top-links">
-                    <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
-                        BOOKMARKS {bookmarks.length > 0 ? <BsFillBookmarkFill /> : <BsBookmark />}
+                <div
+                    className="top-links"
+                    onMouseEnter={() => setShowBookmarks(true)}
+                    onMouseLeave={() => setShowBookmarks(false)}
+                >
+                    <div className="top-links__container">
+                        <div>
+                            <AiOutlineDown />
+                        </div>
+                        <div>BOOKMARKS</div>
+                        <span>{bookmarks.length > 0 ? <BsFillBookmarkFill /> : <BsBookmark />}</span>
                     </div>
 
                     {showBookmarks && <BookmarksDropdown bookmarks={bookmarks} managingBookmarks={managingBookmarks} />}

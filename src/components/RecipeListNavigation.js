@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useParams } from "react-router";
 
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 const RecipeListNavigation = ({ recipes, page, setPage }) => {
-    const params = useParams();
     const numberOfPages = Math.ceil(recipes.length / 7);
 
     const pageDecreaseHandler = () => {
