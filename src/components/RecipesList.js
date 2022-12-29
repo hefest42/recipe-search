@@ -19,7 +19,9 @@ const RecipesList = ({}) => {
 
         const startingPage = Math.ceil((index + 1) / 7);
 
-        setPage(startingPage);
+        if (index === 0) {
+            setPage(1);
+        } else setPage(startingPage);
     };
 
     useEffect(() => {
