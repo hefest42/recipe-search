@@ -1,72 +1,75 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 
-import LoadingSpinner from "./LoadingSpinner";
 import RecipeListNavigation from "./RecipeListNavigation";
+import RecipesListSkeleton from "./RecipesListSkeleton";
 import Error from "./Error";
 
 import { Link, useParams } from "react-router-dom";
 
 // TODO set it to search based on the params
-const RecipesList = ({ getRecipeID }) => {
+const RecipesList = ({}) => {
     const params = useParams();
-    const [pageState, setPageState] = useState("");
+    const [pageState, setPageState] = useState("recipes");
     const [recipes, setRecipes] = useState([]);
-    const [slicedRecipes, setSlicedRecipes] = useState([]);
+    const [displayedRecipes, setDisplayedRecipes] = useState([]);
     const [page, setPage] = useState(0);
 
-    const { search } = params;
+    const initialPageHandler = (allRecipes, id) => {
+        setPage((state) => state - 1);
+        const index = allRecipes.findIndex((recipe) => recipe.recipe_id === id);
+
+        const startingPage = Math.ceil((index + 1) / 7);
+
+        if (index === 0 || index === -1) setPage(1);
+        else setPage(startingPage);
+    };
 
     useEffect(() => {
-        if (search === "hero") return;
+        if (params.search === "" || params.search === "hero") return;
 
-        const getRecipesHandler = async () => {
+        const fetchRecipesHandler = async (searchTerm) => {
             try {
                 setPageState("loading");
 
-                const data = await fetch(`https://forkify-api.herokuapp.com/api/search?q=${search}`);
+                const response = await fetch(`https://forkify-api.herokuapp.com/api/search?q=${searchTerm}`);
 
-                if (!data.ok) throw new Error();
+                const data = await response.json();
 
-                const fetchedRecipes = await data.json();
-
-                setRecipes(
-                    fetchedRecipes.recipes.map((recipe) => {
-                        return {
-                            imageUrl: recipe.image_url,
-                            publisher: recipe.publisher,
-                            publisherUrl: recipe.publisher_url,
-                            recipeId: recipe.recipe_id,
-                            sourceUrl: recipe.source_url,
-                            title: recipe.title,
-                        };
-                    })
-                );
-
+                setRecipes(data.recipes);
+                initialPageHandler(data.recipes, params["*"]);
                 setPageState("recipes");
-            } catch (err) {
-                setPageState("error");
-            }
+            } catch (error) {}
         };
 
-        getRecipesHandler();
-        setPage(0);
-    }, [search]);
+        fetchRecipesHandler(params.search);
+    }, [params.search]);
+
+    useEffect(() => {
+        const start = (page - 1) * 7;
+        const end = page * 7;
+
+        const slicedRecipes = recipes.slice(start, end);
+
+        setDisplayedRecipes(slicedRecipes);
+    }, [page]);
 
     return (
-        <Fragment>
+        <>
             <div className="recipeList">
-                {pageState === "loading" && <LoadingSpinner />}
+                {pageState === "loading" && <RecipesListSkeleton />}
 
                 {pageState === "recipes" &&
-                    slicedRecipes.map((recipe, i) => (
-                        <Link to={`${recipe.recipeId}`} key={i}>
+                    displayedRecipes.map((recipe, i) => (
+                        <Link to={`${recipe.recipe_id}`} key={i}>
                             <div
                                 className={
-                                    recipe.recipeId === getRecipeID ? "recipeList-item recipeList-active centered" : "recipeList-item centered"
+                                    recipe.recipe_id === params["*"]
+                                        ? "recipeList-item recipeList-active centered"
+                                        : "recipeList-item centered"
                                 }
                             >
                                 <div className="recipeList-item__image">
-                                    <img src={recipe.imageUrl} alt={recipe.title} />
+                                    <img src={recipe.image_url} alt={recipe.title} />
                                 </div>
 
                                 <div className="recipeList-item__info centered-column">
@@ -77,11 +80,17 @@ const RecipesList = ({ getRecipeID }) => {
                             </div>
                         </Link>
                     ))}
-
-                {pageState === "error" && <Error size="1.5" errorMessage={`Couldn't find anything for the term ${search}. Please try again`} />}
             </div>
-            <RecipeListNavigation allRecipes={recipes} getSlicedRecipes={setSlicedRecipes} page={page} pageHandler={setPage} />
-        </Fragment>
+
+            {displayedRecipes.length > 0 && (
+                <RecipeListNavigation
+                    recipes={recipes}
+                    page={page}
+                    setPage={setPage}
+                    setDisplayedRecipes={setDisplayedRecipes}
+                />
+            )}
+        </>
     );
 };
 

@@ -1,33 +1,32 @@
 import React from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-const BookmarksDropdown = ({ account, changeBookmarksDropdown, bookmarks, updatedBookmarks }) => {
+const BookmarksDropdown = ({ bookmarks, managingBookmarks }) => {
     const navigate = useNavigate();
+    const params = useParams();
 
-    const modifiedBookmarks = bookmarks.slice(1);
+    const navigateHandler = (id) => {
+        const searchParams = params["*"] === "" ? `hero/${id}` : `${params["*"].split("/")[0]}/${id}`;
 
-    const heroRecipeHandler = (id) => {
-        navigate(`hero/${id}`);
+        return searchParams;
     };
 
     return (
-        <div className="bookmarks" onMouseLeave={() => changeBookmarksDropdown(false)}>
-            {!account.username && <p className="bookmarks-empty">To save bookmarks, you first need to create an account</p>}
-            {account.username && modifiedBookmarks.length === 0 && (
-                <p className="bookmarks-empty">You have no bookmarks. Find a recipe you like, and bookmark it!</p>
-            )}
-
-            {modifiedBookmarks.map((bm, i) => (
+        <div className="bookmarks">
+            {bookmarks.map((bm, i) => (
                 <div className="bookmarks-item" key={i}>
-                    <div className="bookmarks-item__image" onClick={() => heroRecipeHandler(bm.recipeId)}>
+                    <div className="bookmarks-item__image">
                         <img src={bm.imageUrl} alt="recipe" />
                     </div>
 
-                    <div className="bookmarks-item__title centered" onClick={() => heroRecipeHandler(bm.recipeId)}>
+                    <div
+                        className="bookmarks-item__title centered"
+                        onClick={() => navigate(`${navigateHandler(bm.recipeId)}`)}
+                    >
                         {bm.title}
                     </div>
 
@@ -37,8 +36,8 @@ const BookmarksDropdown = ({ account, changeBookmarksDropdown, bookmarks, update
                         </div>
                     </a>
 
-                    <div className="bookmarks-item__delete centered" onClick={() => updatedBookmarks(bm.recipeId, bm)}>
-                        <RiDeleteBinLine />
+                    <div className="bookmarks-item__delete centered">
+                        <RiDeleteBinLine onClick={() => managingBookmarks(bm)} />
                     </div>
                 </div>
             ))}

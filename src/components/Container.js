@@ -1,50 +1,46 @@
 import React, { useState, useEffect } from "react";
+
 import ContainerTop from "./ContainerTop";
 import ContainerBottom from "./ContainerBottom";
 
 import { Routes, Route } from "react-router-dom";
 
-const Container = ({ account, onLogoutAccount }) => {
-    const [loggedInAccountBookmarks, setLoggedInAccountBookmarks] = useState([...account.bookmarks]);
+const Container = ({}) => {
+    const [bookmarks, setBookmarks] = useState([]);
 
-    const loggedInAccountBookmarksHandler = (id, recipe) => {
-        if (!account.username) return;
+    const managingBookmarks = (bookmark) => {
+        if (bookmarks.filter((bm) => bm.recipeId === bookmark.recipeId).length === 1) {
+            const filteredBookmarks = bookmarks.filter((bm) => bm.recipeId !== bookmark.recipeId);
+            const newBookmarks = JSON.stringify(filteredBookmarks);
 
-        if (loggedInAccountBookmarks.filter((bm) => bm.recipeId === id).length === 1) {
-            setLoggedInAccountBookmarks((state) => state.filter((bm) => bm.recipeId !== id));
+            setBookmarks(filteredBookmarks);
+            localStorage.setItem("bookmarks", newBookmarks);
         } else {
-            setLoggedInAccountBookmarks((state) => [...state, recipe]);
+            const addNewBookmark = [...bookmarks, bookmark];
+            const newBookmarks = JSON.stringify(addNewBookmark);
+
+            setBookmarks(addNewBookmark);
+            localStorage.setItem("bookmarks", newBookmarks);
         }
     };
 
     useEffect(() => {
-        fetch(`https://recipedb-3c8b3-default-rtdb.europe-west1.firebasedatabase.app/accounts/${account.accountKey}.json`, {
-            method: "PATCH",
-            body: JSON.stringify({ bookmarks: loggedInAccountBookmarks }),
-            headers: {
-                "CONTENT-TYPE": "application/json",
-            },
-        });
-    }, [loggedInAccountBookmarks, account]);
+        const retrievedBookmarks = localStorage.getItem("bookmarks");
+
+        if (!retrievedBookmarks) return;
+
+        const parsedBookmarks = JSON.parse(retrievedBookmarks);
+
+        setBookmarks(parsedBookmarks);
+    }, []);
 
     return (
         <div className="container">
-            <ContainerTop
-                loggedInAccount={account}
-                accountBookmarks={loggedInAccountBookmarks}
-                onUpdateAccountBookmarks={loggedInAccountBookmarksHandler}
-                logoutAccount={onLogoutAccount}
-            />
+            <ContainerTop bookmarks={bookmarks} managingBookmarks={managingBookmarks} />
             <Routes>
                 <Route
                     path={`:search/*`}
-                    element={
-                        <ContainerBottom
-                            acc={account}
-                            loggedInBookmarks={loggedInAccountBookmarks}
-                            onUpdateAccountBookmarks={loggedInAccountBookmarksHandler}
-                        />
-                    }
+                    element={<ContainerBottom bookmarks={bookmarks} managingBookmarks={managingBookmarks} />}
                 />
             </Routes>
         </div>

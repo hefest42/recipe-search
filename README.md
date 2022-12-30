@@ -1,3 +1,4 @@
 # Made for react.js practice
 
-reacipe search for api practice
+Recipe search for api practice.
+Added skeleton loading of elements during fetching.

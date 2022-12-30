@@ -4,16 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { BsSearch, BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { VscAccount } from "react-icons/vsc";
+import { AiOutlineDown } from "react-icons/ai";
 
-import AccountDropdown from "./AccountDropdown";
 import BookmarksDropdown from "./BookmarksDropdown";
 
-const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookmarks, logoutAccount }) => {
+const ContainerTop = ({ bookmarks, managingBookmarks }) => {
     const navigate = useNavigate();
     const [showSearchWarning, setShowSearchWarning] = useState(false);
     const [showBookmarks, setShowBookmarks] = useState(false);
-    const [showAccount, setShowAccount] = useState(false);
     const foodRef = useRef();
 
     const searchHandler = (e) => {
@@ -62,25 +60,21 @@ const ContainerTop = ({ loggedInAccount, accountBookmarks, onUpdateAccountBookma
                         )}
                     </form>
                 </div>
-                <div className="top-links">
-                    <div className="top-links_container" onClick={() => setShowBookmarks((state) => !state)}>
-                        BOOKMARKS {accountBookmarks.slice(1).length === 0 ? <BsBookmark /> : <BsFillBookmarkFill />}
-                    </div>
-                    <div className="top-links_container">
-                        <VscAccount onClick={() => setShowAccount((state) => !state)} />
-                    </div>
-                    {showAccount && (
-                        <AccountDropdown changeAccountDropdown={setShowAccount} accountUsername={loggedInAccount.username} logout={logoutAccount} />
-                    )}
 
-                    {showBookmarks && (
-                        <BookmarksDropdown
-                            account={loggedInAccount}
-                            changeBookmarksDropdown={setShowBookmarks}
-                            bookmarks={accountBookmarks}
-                            updatedBookmarks={onUpdateAccountBookmarks}
-                        />
-                    )}
+                <div
+                    className="top-links"
+                    onMouseEnter={() => setShowBookmarks(true)}
+                    onMouseLeave={() => setShowBookmarks(false)}
+                >
+                    <div className="top-links__container">
+                        <div>
+                            <AiOutlineDown />
+                        </div>
+                        <div>BOOKMARKS</div>
+                        <span>{bookmarks.length > 0 ? <BsFillBookmarkFill /> : <BsBookmark />}</span>
+                    </div>
+
+                    {showBookmarks && <BookmarksDropdown bookmarks={bookmarks} managingBookmarks={managingBookmarks} />}
                 </div>
             </div>
         </>

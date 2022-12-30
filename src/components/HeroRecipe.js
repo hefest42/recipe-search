@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 
-import LoadingSpinner from "./LoadingSpinner";
 import Error from "./Error";
 import BookmarkModal from "./BookmarkModal";
+import HeroRecipeSkeleton from "./HeroRecipeSkeleton";
 
 import { useParams } from "react-router-dom";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
-const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }) => {
+const HeroRecipe = ({ bookmarks, managingBookmarks }) => {
+    const params = useParams();
     const [pageState, setPageState] = useState("");
     const [sortedRecipe, setSortedRecipe] = useState({});
-    const [showBookmarkModal, setShowBookmarkModal] = useState(false);
-    const params = useParams();
 
     const { id } = params;
 
-    const bookmarkModalHandler = () => {
-        if (account.username) return;
-
-        setShowBookmarkModal(true);
-    };
-
-    // fetching hero recipe based on the id in the link
     useEffect(() => {
         if (!id) return;
 
@@ -57,14 +48,11 @@ const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }
         };
 
         fetchRecipeHandler();
-        getID(id);
-    }, [id, getID]);
-
-    // console.log(account);
+    }, [id]);
 
     return (
         <div className="hero-container ">
-            {pageState === "loading" && <LoadingSpinner />}
+            {pageState === "loading" && <HeroRecipeSkeleton />}
 
             {pageState === "hero" && (
                 <div className="hero">
@@ -77,20 +65,10 @@ const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }
                     </div>
 
                     <div className="hero-bookmark centered">
-                        {accountBookmarks.filter((bmark) => bmark.recipeId === id).length === 1 ? (
-                            <BsFillBookmarkFill
-                                onClick={() => {
-                                    updateAccountBookmarks(id, sortedRecipe);
-                                    bookmarkModalHandler();
-                                }}
-                            />
+                        {!bookmarks.filter((bm) => bm.recipeId === sortedRecipe.recipeId).length > 0 ? (
+                            <BsBookmark onClick={() => managingBookmarks(sortedRecipe)} />
                         ) : (
-                            <BsBookmark
-                                onClick={() => {
-                                    updateAccountBookmarks(id, sortedRecipe);
-                                    bookmarkModalHandler();
-                                }}
-                            />
+                            <BsFillBookmarkFill onClick={() => managingBookmarks(sortedRecipe)} />
                         )}
                     </div>
 
@@ -103,7 +81,8 @@ const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }
                     </div>
                     <div className="hero-info centered-column">
                         <h3>
-                            For more recipes from <span className="hero-highlight">{sortedRecipe.publisher}</span> click the button.
+                            For more recipes from <span className="hero-highlight">{sortedRecipe.publisher}</span> click
+                            the button.
                         </h3>
 
                         <a href={sortedRecipe.publisherUrl} target="_blank" rel="noreferrer">
@@ -119,12 +98,6 @@ const HeroRecipe = ({ account, getID, accountBookmarks, updateAccountBookmarks }
                         </a>
                     </div>
                 </div>
-            )}
-
-            {pageState === "error" && <Error size="2" errorMessage="Oops... Something went wrong, please try again." />}
-            {ReactDOM.createPortal(
-                <BookmarkModal showModal={showBookmarkModal} setBookmarkModal={setShowBookmarkModal} />,
-                document.getElementById("modal-root")
             )}
         </div>
     );
