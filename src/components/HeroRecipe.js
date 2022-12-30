@@ -54,6 +54,10 @@ const HeroRecipe = ({ bookmarks, managingBookmarks }) => {
         <div className="hero-container ">
             {pageState === "loading" && <HeroRecipeSkeleton />}
 
+            {pageState === "error" && (
+                <Error errorMessage={"Oops... Something went wrong. Please try a different recipe."} size={"1.3"} />
+            )}
+
             {pageState === "hero" && (
                 <div className="hero">
                     <div className="hero-image">

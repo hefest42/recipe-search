@@ -9,7 +9,7 @@ import { Link, useParams } from "react-router-dom";
 // TODO set it to search based on the params
 const RecipesList = ({}) => {
     const params = useParams();
-    const [pageState, setPageState] = useState("recipes");
+    const [pageState, setPageState] = useState("");
     const [recipes, setRecipes] = useState([]);
     const [displayedRecipes, setDisplayedRecipes] = useState([]);
     const [page, setPage] = useState(0);
@@ -33,12 +33,20 @@ const RecipesList = ({}) => {
 
                 const response = await fetch(`https://forkify-api.herokuapp.com/api/search?q=${searchTerm}`);
 
+                if (!response.ok) throw new Error();
+
                 const data = await response.json();
 
                 setRecipes(data.recipes);
                 initialPageHandler(data.recipes, params["*"]);
-                setPageState("recipes");
-            } catch (error) {}
+
+                setTimeout(() => {
+                    setPageState("recipes");
+                }, 500);
+            } catch (error) {
+                setPageState("error");
+                setDisplayedRecipes([]);
+            }
         };
 
         fetchRecipesHandler(params.search);
@@ -57,6 +65,8 @@ const RecipesList = ({}) => {
         <>
             <div className="recipeList">
                 {pageState === "loading" && <RecipesListSkeleton />}
+
+                {pageState === "error" && <Error errorMessage={"Could not find any recipes..."} />}
 
                 {pageState === "recipes" &&
                     displayedRecipes.map((recipe, i) => (
