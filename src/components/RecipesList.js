@@ -12,9 +12,10 @@ const RecipesList = ({}) => {
     const [pageState, setPageState] = useState("recipes");
     const [recipes, setRecipes] = useState([]);
     const [displayedRecipes, setDisplayedRecipes] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
 
-    const test = (allRecipes, id) => {
+    const initialPageHandler = (allRecipes, id) => {
+        setPage((state) => state - 1);
         const index = allRecipes.findIndex((recipe) => recipe.recipe_id === id);
 
         const startingPage = Math.ceil((index + 1) / 7);
@@ -35,7 +36,7 @@ const RecipesList = ({}) => {
                 const data = await response.json();
 
                 setRecipes(data.recipes);
-                test(data.recipes, params["*"]);
+                initialPageHandler(data.recipes, params["*"]);
                 setPageState("recipes");
             } catch (error) {}
         };
@@ -48,8 +49,6 @@ const RecipesList = ({}) => {
         const end = page * 7;
 
         const slicedRecipes = recipes.slice(start, end);
-
-        console.log(slicedRecipes);
 
         setDisplayedRecipes(slicedRecipes);
     }, [page]);

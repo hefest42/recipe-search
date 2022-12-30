@@ -1,14 +1,19 @@
 import React from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 const BookmarksDropdown = ({ bookmarks, managingBookmarks }) => {
     const navigate = useNavigate();
+    const params = useParams();
 
-    console.log(bookmarks);
+    const navigateHandler = (id) => {
+        const searchParams = params["*"] === "" ? `hero/${id}` : `${params["*"].split("/")[0]}/${id}`;
+
+        return searchParams;
+    };
 
     return (
         <div className="bookmarks">
@@ -18,7 +23,10 @@ const BookmarksDropdown = ({ bookmarks, managingBookmarks }) => {
                         <img src={bm.imageUrl} alt="recipe" />
                     </div>
 
-                    <div className="bookmarks-item__title centered" onClick={() => navigate(`hero/${bm.recipeId}`)}>
+                    <div
+                        className="bookmarks-item__title centered"
+                        onClick={() => navigate(`${navigateHandler(bm.recipeId)}`)}
+                    >
                         {bm.title}
                     </div>
 

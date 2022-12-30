@@ -1,7 +1,5 @@
 import React from "react";
 
-import { useParams } from "react-router";
-
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 const RecipeListNavigation = ({ recipes, page, setPage }) => {
